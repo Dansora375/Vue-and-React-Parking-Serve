@@ -1,10 +1,15 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const Info_parqueadero_Sch = new Schema({
+// Esquema
+const Sch_Info_parqueadero = new Schema({
     residente: {
         
-        _id: "",
+        _id: {
+            
+            type: mongoose.ObjectID,
+            default:""
+        },
         resi_same: {
             type: String,
             required: [true, 'Nombre obligatorio',]
@@ -13,11 +18,15 @@ const Info_parqueadero_Sch = new Schema({
             type: Number,
             required: [true, 'CC obligatorio']
         },
-        tel: Number,
+        tel: Number
     },
     
     apartamento:{
-        _id: "",
+        _id: {
+
+            type: mongoose.ObjectID,
+            default:""
+        },
         apto_num: {
              type: Number,
             required: [true, 'numero de apartamento obligatorio']
@@ -25,7 +34,12 @@ const Info_parqueadero_Sch = new Schema({
     },
     
     vehiculo: {
-        _id: "",
+        _id: {
+
+            type: mongoose.ObjectID,
+            default:""
+        },
+
         vehicle_type: String,
         placa: String,
         color: String,
@@ -34,15 +48,18 @@ const Info_parqueadero_Sch = new Schema({
             type: Date,
             default: Date.now
         }
-        },
-    activo: {
+    },
+    ocupado: {
+            
         type: Boolean,
         default: false
     },
-    vehicle_state:String,   
+    
+    vehicle_state: String,
 
 
 });
 
-const Info_parqueadero = mongoose.model('Nota', Info_parqueadero_Sch);
+// Modelo
+const Info_parqueadero = mongoose.model('Info_parqueadero ', Sch_Info_parqueadero);
 export default Info_parqueadero;
