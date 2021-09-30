@@ -4,13 +4,11 @@ const Schema = mongoose.Schema;
 // Esquema
 const Sch_Info_parqueadero = new Schema({
     residente: {
-        
-        _id: {
-            
-            type: mongoose.ObjectID,
-            default:""
-        },
-        resi_same: {
+        // _id: {
+        //     type: mongoose.ObjectID,
+        //     default:""
+        // },
+        resi_name: {
             type: String,
             required: [true, 'Nombre obligatorio',]
         },
@@ -22,40 +20,44 @@ const Sch_Info_parqueadero = new Schema({
     },
     
     apartamento:{
-        _id: {
-
-            type: mongoose.ObjectID,
-            default:""
-        },
+        // _id: {
+        //     type: mongoose.ObjectID,
+        //     default:""
+        // },
         apto_num: {
-             type: Number,
+            type: Number,
             required: [true, 'numero de apartamento obligatorio']
-        }
+        },
+        tower:String
     },
     
     vehiculo: {
-        _id: {
-
-            type: mongoose.ObjectID,
-            default:""
-        },
-
+        // _id: {
+        //     type: mongoose.ObjectID,
+        //     default:""
+        // },
         vehicle_type: String,
-        placa: String,
-        color: String,
         marca: String,
-        date: {
-            type: Date,
-            default: Date.now
-        }
+        placa: String,
+        color: String
+
+        
     },
+
     ocupado: {
-            
         type: Boolean,
         default: false
     },
     
-    vehicle_state: String,
+    vehicle_state: {
+        type: String,
+        default:"Ninguno"
+    },
+
+    date: {
+        type: Date,
+        default: Date.now
+    }
 
 
 });

@@ -11,7 +11,7 @@ router.post('/nueva-nota', async(req, res) => {
         res.status(200).json(notaDB); 
     } catch (error) { 
         return res.status(500).json({ 
-        mensaje: `Ocurrio un error', ${error}`, error }) 
+        mensaje: `Ocurrio un error', ${error}`, error })    
     } 
 });
 

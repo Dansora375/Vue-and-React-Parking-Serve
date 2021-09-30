@@ -68,7 +68,7 @@ app.use(express.urlencoded({ extended: true }))
 //     res.send('Hello World!'); 
 // });
 
-app.use('/api', require('./routes/vehiculosRoutes'));
+app.use('/api', require('./routes/Info_parq_Routes'));
 
 const history = require('connect-history-api-fallback'); 
 app.use(history()); 
