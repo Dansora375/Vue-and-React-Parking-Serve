@@ -68,12 +68,14 @@ app.use(express.urlencoded({ extended: true }))
 //     res.send('Hello World!'); 
 // });
 
-app.use('/api', require('./routes/vehiculosRoutes'));
+app.use('/api', require('./routes/VehiculosRoutes'));
+app.use('/api/entrada_vehiculo', require('./routes/EntradaVehiclesRoutes'));
 
 const history = require('connect-history-api-fallback'); 
 app.use(history()); 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 //Puerto
 app.set('puerto', process.env.PORT || 3000); 
-app.listen(app.get('puerto'), function () { console.log('Example app listening on port'+ app.get('puerto')); });
+app.listen(app.get('puerto'), function () { console.log('Example app listening on port '+ app.get('puerto')); });

@@ -17,4 +17,8 @@ router.post('/nuevo-vehiculo', async(req, res)=>{
   }
 });
 
+router.get('/nuevo- /:id', async(req, res)=>{
+  //consiguiendo los datos de la base
+});
+
 module.exports = router;
