@@ -1,0 +1,92 @@
+{
+    "residente": {
+        
+        "resi_name": "Dante",
+       
+        "cc":"789",
+        "tel": "300"
+    },
+    
+    "apartamento":{
+        
+        "apto_num": "1",
+        "tower": "A"
+    },
+    
+    "vehiculo": {
+        
+        "vehicle_type":"Moto",
+        "placa": "789asd",
+        "color": "amarillo",
+        "marca": "toyota"
+
+    },
+
+    "ocupado": "false",
+    
+    "vehicle_state":"Un golpe"
+
+    
+}
+
+{
+    "residente": {
+        
+        "resi_name": "Sebastian",
+       
+        "cc":"123",
+        "tel": "100"
+    },
+    
+    "apartamento":{
+        
+        "apto_num": "2",
+        "tower": "A"
+    },
+    
+    "vehiculo": {
+        
+        "vehicle_type":"Carro",
+        "placa": "123asd",
+        "color": "rojo",
+        "marca": "toyota"
+
+    },
+
+    "ocupado": "true",
+    
+    "vehicle_state":"Un rayon"
+
+    
+}
+
+{
+    "residente": {
+        
+        "resi_name": "Alan",
+       
+        "cc":"456",
+        "tel": "200"
+    },
+    
+    "apartamento":{
+        
+        "apto_num": "3",
+        "tower": "A"
+    },
+    
+    "vehiculo": {
+        
+        "vehicle_type":"Moto",
+        "placa": "466asd",
+        "color": "negro",
+        "marca": "toyota"
+
+    },
+
+    "ocupado": "true",
+    
+    "vehicle_state":"Un rayon"
+
+    
+}

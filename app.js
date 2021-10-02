@@ -5,6 +5,8 @@ import path from 'path';
 
 const app = express();
 
+// ----------------------------------------------------------------------
+// Conexion
 const mongoose = require('mongoose');
 // const password = '1234567890_Mintic'
 // const userName = 'vue-user'
@@ -20,7 +22,6 @@ mongoose.connect(uri, options).then(
     () => { console.log('Conectado a DB') },
     err => { console.log(err) }
 );
-
 
 // --------------------------------------------------
 // mi projecto 0
@@ -54,19 +55,30 @@ mongoose.connect(uri, options).then(
 
 // --------------------------------------------------
 
-//middleware
+
+
+//middlewares
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 
 //application/x-www-form-urlencoded 
-app.use(express.urlencoded({ extended: true }))
+
 //app.use(express.static(path.join(__dirname, 'public')));
 
+
+// -------------------------------------------------------------
 //Ruta
+
+
 // app.get('/', function (req, res) { 
 //     res.send('Hello World!'); 
 // });
+
+
+// ---------------------------------------------------------------
+// middlewares apra VUE
 
 app.use('/api', require('./routes/Info_parq_Routes'));
 
