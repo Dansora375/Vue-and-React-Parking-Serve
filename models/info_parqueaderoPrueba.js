@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-
+// Esquema
 const Sch_Info_parqueadero = new Schema({
-        residente: {
+    residente: {
        
         resi_name: {
             type: String,
@@ -81,22 +81,8 @@ const Sch_Info_parqueadero = new Schema({
     }
 
 
-
-
-
-
-
-})
-
-
-
-
-
-
-
-
-
+});
 
 // Modelo
-const Info_parqueadero = mongoose.model('Info_parqueadero ', Sch_Info_parqueadero);
-export default Info_parqueadero;
+// const Info_parqueadero = mongoose.model('Info_parqueadero ', Sch_Info_parqueadero);
+// export default Info_parqueadero;
