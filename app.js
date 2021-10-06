@@ -30,24 +30,10 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api', require('./routes/VehiculosRoutes'));
 app.use('/api/entrada_vehiculo', require('./routes/EntradaVehiclesRoutes'));
-//application/x-www-form-urlencoded 
-
-//app.use(express.static(path.join(__dirname, 'public')));
-
-
-// -------------------------------------------------------------
-//Ruta
-
-
-// app.get('/', function (req, res) { 
-//     res.send('Hello World!'); 
-// });
-
-
-// ---------------------------------------------------------------
 // middlewares apra VUE
 
 app.use('/api', require('./routes/Info_parq_Routes'));
+app.use('/api/authentication', require("./routes/authentication/login"));
 
 const history = require('connect-history-api-fallback'); 
 

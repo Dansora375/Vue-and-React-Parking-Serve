@@ -5,8 +5,6 @@ const options_type=["Carro", "Moto", "Ninguno"]
 const Entrada_vehiculo_schema = new mongoose.Schema({
   vehiculo: { //Este dato se usa para referenciar a las distintas tablas vehiculo
     type: mongoose.ObjectId,
-    
-
   },
   placa: {
     type: String,

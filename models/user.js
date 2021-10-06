@@ -1,27 +1,33 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const saltRoutes=10;//Usada para mejorar la seguridad del encriptado de contraseñas
+
+const saltRounds=10;//Usada para mejorar la seguridad del encriptado de contraseñas
 
 const Schema = mongoose.Schema;
 
-function validateEmail(val){
-  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-}
-
 //Creando el Schema
 const userSchema=new Schema({
-  cedula: Number,
-  nombre: {
+  Cc: Number,
+  name: {
     type: String,
     required: [true, 'Es necesario el nombre completo del usuario nuevo'],
   },
-  usuario: {
+  user: {
     type: String,
     required: [true, 'El campo usuario es oblligatorio'],
   },
-  correo: {
-
+  email: {
+    type: String, 
+  },
+  password: {
+    type: String,
+    required: [true, 'la contraseña es obligatoria'],
+  },
+  type: {
+    enum:['Gerente', 'Supervisor', 'Guarda'],
+    type: String,
+    default: 'Guarda', 
   }
   // placa: String,
 
@@ -36,11 +42,36 @@ const userSchema=new Schema({
 //   parqueadero: mongoose.ObjectId,
 });
 
+userSchema.pre('save', function(next){
+  if(this.isNew || this.isModified('')){
+    pt.hash(data.password, saltRounds, (error, hashedPassword)=> {
+      if(error){
+        next(error);
+      }else{
+        data.password = hashedPassword;
+        next();
+      }
+    });
+  }else{
+    next();
+  }
+});
+
+userSchema.methods.isCorrectPassword = function (password, callback){
+  bcrypt.compare(password, this.password, function(err, same){
+    if(err){
+      callback(err);
+    }else{
+      callback(err,same);
+    }
+  });
+}
+
 //Creando el modelo
-const Vehiculo = mongoose.model('Vehiculo',vehiculoSchema);
+const User = mongoose.model('User',userSchema);
 
 
-export default Vehiculo;
+export default User;
 
 /**
  * Vehiculos---------------
