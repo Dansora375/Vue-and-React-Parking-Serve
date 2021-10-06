@@ -17,7 +17,7 @@ const Entrada_vehiculo_schema = new mongoose.Schema({
   },
   hora_entrada: {//Colocando como default la fecha actual
     type: Date,
-    default: Date.now(),
+    default: new Date(),
   },
   activo: {
     type: Boolean,
