@@ -7,8 +7,9 @@ router.get('/residentList', async (req, res) => {
   const finalizadas = req.query.fin == '1' || req.query.fin == 'true'
   try {
     let lista
-    if (finalizadas) { lista = await Entrada_vehiculo.find() } 
-    else { lista = await Residente.find({ activo: true }) }
+    if (finalizadas) { 
+      lista = await Entrada_vehiculo.find()
+    } else { lista = await Residente.find({ activo: true }) }
     res.json(lista)
   } catch (error) {
     return res.status(400).json({

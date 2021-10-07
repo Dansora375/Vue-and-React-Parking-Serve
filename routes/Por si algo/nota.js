@@ -1,6 +1,6 @@
 import express from 'express'
 
-import Nota from '../models/nota'
+import Nota from '../../Por_si_algo/nota'
 const router = express.Router()
 // const Nota = require('../models/nota');
 

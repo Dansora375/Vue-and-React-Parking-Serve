@@ -1,35 +1,25 @@
-import mongoose from 'mongoose'
-const Schema = mongoose.Schema
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
-// Creando el Schema
-const vehiculoSchema = new Schema({
-  // numero_motor: String, /* ? */
+//Creando el Schema
+const vehiculoSchema=new Schema({
   placa: String,
+
+  numero_motor: String,
   marca: String,
   color: String,
   tipo: {
     type: String,
-    default: 'Unknown'
+    default: "Unknown",
   },
-  descripcion: String,
-  // residentes: {
-  //   type: Schema.Types.Objectid,
-  //   REF: residentes'
-  // }
-})
+  descripcion: String  
+//   parqueadero: mongoose.ObjectId,
+});
 
-vehiculoSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
+//Creando el modelo
+const Vehiculo = mongoose.model('Vehiculo',vehiculoSchema);
 
-// Creando el modelo
-const Vehiculo = mongoose.model('Vehiculo', vehiculoSchema)
-
-export default Vehiculo
+export default Vehiculo;
 
 /**
  * Vehiculos---------------
