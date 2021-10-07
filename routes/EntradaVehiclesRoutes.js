@@ -1,7 +1,7 @@
 import express, {json} from 'express';
 const router = express.Router();
 
-import Entrada_vehiculo from '../models/entrada_vehiculos';
+import Entrada_vehiculo from '../models/principal_models/visitante';
 
 router.get('/lista', async(req, res)=>{
 

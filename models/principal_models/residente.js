@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-// const Schema = mongoose.Schema
+import mongoose, { SchemaTypes } from 'mongoose'
+const Schema = mongoose.Schema
 // const options_type = ['Carro', 'Moto', 'Ninguno']
 // Creando el Schema
 const residenteSchema = new mongoose.Schema({
@@ -13,15 +13,27 @@ const residenteSchema = new mongoose.Schema({
     required: [true, 'CC obligatorio']
   },
   telefono: Number,
-
  
 
+
   // Datos sobre residencia
-  apto_num: {
-    type: Number,
-    required: [true, 'numero de apartamento obligatorio']
+  // Un residente puede tener varios hogares
+  // Este array de hogares se llenara en el put de los hogares
+  hogar:[{
+    type: Schema.Types.ObjectId,
+    ref: 'Hogar'
+  }],
+
+  hogar_habitando:{
+    type: Schema.Types.ObjectId,
+    ref:'Hogar'
   },
-  tower: String,
+
+  // apto_num: {
+  //   type: Number,
+  //   required: [true, 'numero de apartamento obligatorio']
+  // },
+  // tower: String,
 
   // Datos sobre el vehiculo
   placa: {
@@ -36,6 +48,7 @@ const residenteSchema = new mongoose.Schema({
     default: ['Carro', 'Moto', 'Ninguno'].lastItem
   },
   datos_extra: String,
+
   activo: {
     type: Boolean,
     default: true
@@ -54,15 +67,9 @@ const residenteSchema = new mongoose.Schema({
   hora_salida: Date
 })
 
-residenteSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    // returnedObject.id = returnedObject._id
-    // delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
+
 // Creando el modelo
-module.exports= mongoose.model("Residente",residenteSchema);
+
 const Residente = mongoose.model('Residente', residenteSchema)
 
 export default Residente

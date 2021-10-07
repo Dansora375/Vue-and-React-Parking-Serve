@@ -1,6 +1,7 @@
-import express from 'express'
+import express, { request } from 'express'
 
 import Residente from '../models/principal_models/residente'
+import Hogar from '../models/Hogar'
 const router = express.Router()
 
 router.get('/residentList', async (req, res) => {
@@ -21,8 +22,13 @@ router.get('/residentList', async (req, res) => {
 
 router.get('/residentInf', async (req, res) => {
   try {
-    const Inf_ParkDB = await Residente.find()
-    res.status(200).json(Inf_ParkDB)
+    const residentes=  await Residente.find({}).populate('hogar',{
+      apto_num:1,
+      tower:1,
+      date:1
+
+    })
+    res.status(200).json(residentes)
   } catch (error) {
     return res.status(400).json({
       mensaje: `Ocurrio un error', ${error}`, error
@@ -31,10 +37,29 @@ router.get('/residentInf', async (req, res) => {
 })
 
 router.post('/residentInf', async (req, res) => {
-  const body = req.body
+  const { body }= req
+  const { nombre, cedula, telefono, placa, marca, color, tipo, apto_num, tower, datos_extra} =body
+
+  const hogar_habitando= await Hogar.findOne({apto_num:apto_num, tower:tower})
+
+  const resident = new Residente({
+    nombre,
+    cedula,
+    telefono,
+    hogar_habitando:hogar_habitando._id,
+    placa,
+    marca,
+    color,
+    tipo,
+    datos_extra
+  })
   try {
-    const Inf_ParkDB = await Residente.create(body)
-    res.status(201).json(Inf_ParkDB)
+    const saveResident = await resident.save()
+
+    hogar_habitando.residents= hogar_habitando.residents.concat(saveResident._id)
+    await hogar_habitando.save()
+
+    res.status(201).json(saveResident)
   } catch (error) {
     return res.status(500).json({ mensaje: `Ocurrio un error', ${error}`, error })
   }

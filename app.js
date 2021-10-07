@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }))
 // app.use('/api', require('./routes/info_parqPrueba'))
 app.use('/api/entrada_vehiculo', require('./routes/EntradaVehiclesRoutes'))
 app.use('/api/', require('./routes/Resident_inf'))
-// app.use('/api/', require('./routes/HogaresRoutes'))
+app.use('/api/', require('./routes/HogaresRoutes'))
 
 // app.use('/api', require('./routes/Info_parq_Routes'));
 app.use('/api/authentication', require("./routes/authentication/login"));
