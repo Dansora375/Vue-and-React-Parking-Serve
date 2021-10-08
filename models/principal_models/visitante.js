@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 // const Schema = mongoose.Schema
-
 // const options_type = ['Carro', 'Moto', 'Ninguno']
 
 // Creando el Schema
@@ -33,6 +32,7 @@ const NewVisitorSche = new mongoose.Schema({
     default: ['Carro', 'Moto', 'Ninguno'].lastItem
   },
   datos_extra: String,
+
   ocupado: {
     type: Boolean,
     default: true
@@ -49,11 +49,6 @@ const NewVisitorSche = new mongoose.Schema({
 
 })
 
-NewVisitorSche.set('toJSON', {
-  transform: (document, returnedObject) => {
-    delete returnedObject.__v
-  }
-})
 // Creando el modelo
 const Entrada_vehiculo = mongoose.model('Entrada_vehiculo', NewVisitorSche)
 

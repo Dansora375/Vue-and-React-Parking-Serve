@@ -1,31 +1,29 @@
-import express, { request } from 'express'
+import express from 'express'
 
 import Hogar from '../models/Hogar'
 import Residente from '../models/principal_models/residente'
 const router = express.Router()
 
-
 router.post('/hogares', async (req, res) => {
   const {
-    apto_num,
+    aptoNum,
     tower,
-    home_owner_CC
-  }= req.body
+    homeOwnerCC
+  } = req.body
 
-
-  const home_owner = await Residente.findOne({cedula: home_owner_CC})
+  const homeOwner = await Residente.findOne({ cedula: homeOwnerCC })
 
   const newhogar = new Hogar({
-    apto_num,
+    apto_num: aptoNum,
     tower,
-    date:new Date(),
-    home_owner:home_owner._id
+    date: new Date(),
+    home_owner: homeOwner._id
   })
   try {
     const saveHogar = await newhogar.save()
 
-    home_owner.hogar= home_owner.hogar.concat(saveHogar._id)
-    await home_owner.save()
+    homeOwner.hogar = homeOwner.hogar.concat(saveHogar._id)
+    await homeOwner.save()
 
     res.status(200).json(saveHogar)
   } catch (error) {
@@ -38,13 +36,22 @@ router.post('/hogares', async (req, res) => {
 
 router.get('/hogares', async (req, res) => {
   try {
-    const hogares=  await Hogar.find({}).populate('home_owner',{
-      nombre:1,
-      telefono:1,
-      placa:1,
-      tipo:1,
-      marca:1
-    })
+    const hogares = await Hogar.find({})
+      .populate('homeOwner', {
+        nombre: 1,
+        telefono: 1,
+        placa: 1
+
+      }).populate('residents', {
+        nombre: 1
+
+      })
+      .populate('parqueadero', {
+        nombre_Parqueadero: 1,
+        vehiculo: 1,
+        assigned: 1
+        // verificar si genere erroes en el populete al no tener datos del vehiculo
+      })
     res.status(200).json(hogares)
   } catch (error) {
     return res.status(400).json({
@@ -52,13 +59,16 @@ router.get('/hogares', async (req, res) => {
     })
   }
 })
+
+module.exports = router
+
 // router.get('/hogares', async (req, res) => {
 //   try {
 //     const dthogar = await Hogar.find({}).populate('residentes', {
 //       nombre:1,
 //       telefono:1,
 //       placa:1,
-//       apto_num:1,
+//       aptoNum:1,
 //       tipo:1,
 //       tower:1
 //     })
@@ -76,5 +86,3 @@ router.get('/hogares', async (req, res) => {
 //     res.status(200).send(hogares);
 //   });
 // });
-
-module.exports = router

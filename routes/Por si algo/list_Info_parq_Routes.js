@@ -1,6 +1,6 @@
 import express from 'express'
 
-import NewVisitor from '../models/list_info_parq'
+import NewVisitor from '../../Por_si_algo/list_info_parq'
 const router = express.Router()
 
 router.post('/vehicle_zone', async (req, res) => {

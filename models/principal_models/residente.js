@@ -1,4 +1,4 @@
-import mongoose, { SchemaTypes } from 'mongoose'
+import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 // const options_type = ['Carro', 'Moto', 'Ninguno']
 // Creando el Schema
@@ -13,60 +13,31 @@ const residenteSchema = new mongoose.Schema({
     required: [true, 'CC obligatorio']
   },
   telefono: Number,
- 
-
 
   // Datos sobre residencia
-  // Un residente puede tener varios hogares
-  // Este array de hogares se llenara en el put de los hogares
-  hogar:[{
+  // Un residente puede tener varios hogares, no es lo optino
+  // Este array de hogares se llenara desde put de los hogares
+  hogar: [{
     type: Schema.Types.ObjectId,
     ref: 'Hogar'
   }],
-
-  hogar_habitando:{
+  // Se ira llenando con el id del hogar correspondiente si el  residente no es el porpietario,y tambien si se ha ingresado el apto_num y el tower
+  hogar_habitando: {
     type: Schema.Types.ObjectId,
-    ref:'Hogar'
+    ref: 'Hogar'
   },
+  // En el vehiculo vendran los datos del parqueadero y del propio vehiculo
+  // Desde el post del vehiculo se enviara el id del vehiculo y los datos de este
+  vehiculo: {
+    type: Schema.Types.ObjectId,
+    ref: 'vehiculo'
+  },
+  Date: {
+    type: Date,
+    default: Date.now
+  }
 
-  // apto_num: {
-  //   type: Number,
-  //   required: [true, 'numero de apartamento obligatorio']
-  // },
-  // tower: String,
-
-  // Datos sobre el vehiculo
-  placa: {
-    type: String,
-    required: [true, 'Placa es obligatoria']
-  },
-  marca: String,
-  color: String,
-  tipo: {
-    type: String,
-    enum: ['Carro', 'Moto', 'Ninguno'],
-    default: ['Carro', 'Moto', 'Ninguno'].lastItem
-  },
-  datos_extra: String,
-
-  activo: {
-    type: Boolean,
-    default: true
-  },
-  ocupado: {
-    type: Boolean,
-    default: false
-  },
- 
-  // horaingreso: {
-  //   type: Date,
-  //   default: Date.now
-  // },
-  hora_entrada:Date,
-
-  hora_salida: Date
 })
-
 
 // Creando el modelo
 
