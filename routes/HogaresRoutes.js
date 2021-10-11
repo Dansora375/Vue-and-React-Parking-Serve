@@ -9,6 +9,7 @@ router.post('/hogares', async (req, res) => {
     aptoNum,
     tower,
     homeOwnerCC
+  // Se debe hacer en la vista obligatorio que se ingrese el CC DE PROPIETARIO EDL HOGAR
   } = req.body
 
   const homeOwner = await Residente.findOne({ cedula: homeOwnerCC })
@@ -16,7 +17,6 @@ router.post('/hogares', async (req, res) => {
   const newhogar = new Hogar({
     apto_num: aptoNum,
     tower,
-    date: new Date(),
     home_owner: homeOwner._id
   })
   try {
@@ -28,7 +28,7 @@ router.post('/hogares', async (req, res) => {
     res.status(200).json(saveHogar)
   } catch (error) {
     return res.status(500).json({
-      mensaje: `Ocurrio un error', ${error}`,
+      mensaje: `Ocurrio un error al crear un hogar', ${error}`,
       error
     })
   }
@@ -36,26 +36,36 @@ router.post('/hogares', async (req, res) => {
 
 router.get('/hogares', async (req, res) => {
   try {
+    const parqAndVehicle = {
+      path: 'parqueadero',
+      model: 'parqueadero',
+      populate: {
+        path: 'vehiculo',
+        model: 'vehiculo',
+        select: 'placa marca tipo'
+      },
+      select: 'nombre_Parqueadero assigned'
+    }
     const hogares = await Hogar.find({})
-      .populate('homeOwner', {
+      .populate('home_owner', {
         nombre: 1,
-        telefono: 1,
-        placa: 1
+        telefono: 1
 
       }).populate('residents', {
         nombre: 1
 
       })
-      .populate('parqueadero', {
-        nombre_Parqueadero: 1,
-        vehiculo: 1,
-        assigned: 1
-        // verificar si genere erroes en el populete al no tener datos del vehiculo
-      })
+      .populate(parqAndVehicle)
+      // .populate('parqueadero', {
+      //   nombre_Parqueadero: 1,
+      //   vehiculo: 1,
+      //   assigned: 1
+
+    // })
     res.status(200).json(hogares)
   } catch (error) {
     return res.status(400).json({
-      mensaje: `Ocurrio un error', ${error}`, error
+      mensaje: `Ocurrio un error al obtener los hogares', ${error}`, error
     })
   }
 })

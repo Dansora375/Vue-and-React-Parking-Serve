@@ -1,4 +1,4 @@
-import express, { json } from 'express'
+import express from 'express'
 import Residente from '../models/principal_models/residente'
 import IngresoResident from '../models/principal_models/residentIngreso.js'
 const router = express.Router()
@@ -11,31 +11,68 @@ router.post('/ingresoResident', async (req, res) => {
   const traerResidente = await Residente.findOne({ cedula: residentCC })
 
   const newIngresoResident = new IngresoResident({
-    residente: traerResidente._id,
-    hora_entrada: new Date()
-
+    residente: traerResidente._id
+    // hora_entrada: new Date()
   })
   try {
     const saveIngresoR = await newIngresoResident.save()
 
     res.status(200).json(saveIngresoR)
   } catch (error) {
-
+    return res.status(500).json({
+      mensaje: `Ocurrio un error', ${error}`,
+      error
+    })
   }
 })
 
 router.get('/ingresoResident', async (req, res) => {
   try {
-    // Si desde los datos del residente solo muestra el id del hogar pero no susa datos se podrai probara ajecutar un get con pupulate en residente
-    const ingresosResidents = await IngresoResident.find({})
-      .populate('residente'{
-        nombre:1,
-        hogar:1,
-        vehiculo:1
-        // en el vehiculo se trae el nombre del parqueadero si solo se muestra el id del parqueaderom, probar la mismas solucion que con el hogar
-      })
+    // Se enlistan los populate
+    const populateVehicle = {
+      path: 'residente',
+      model: 'Residente',
+      populate: {
+        path: 'vehiculo',
+        model: 'vehiculo',
+        populate: {
+          path: 'parqueadero',
+          model: 'parqueadero',
+          select: 'nombre_Parqueadero'
+        },
+        select: 'placa'
+      }
+    }
+
+    const populateHogar = {
+      path: 'residente',
+      populate: {
+        path: 'hogar',
+        select: 'apto_num tower'
+      }
+    }
+
+    const populateHogarHabitando = {
+      path: 'residente',
+      select: 'nombre',
+      populate: {
+        path: 'hogar_habitando',
+        select: 'apto_num tower'
+      }
+    }
+
+    const ingresosResidents = await IngresoResident.find({ activo: true })
+      // .populate(populateApto)
+      .populate(populateVehicle)
+      .populate(populateHogar)
+      .populate(populateHogarHabitando)
     res.status(200).json(ingresosResidents)
   } catch (error) {
-
+    return res.status(500).json({
+      mensaje: `Ocurrio un error', ${error}`,
+      error
+    })
   }
 })
+
+module.exports = router

@@ -14,37 +14,73 @@ router.post('/vehiculos', async (req, res) => {
     parkingName,
     homeOwnerCC
   } = req.body
-  // que pasara si no se ingresa el nombre del parqueadero porque no tiene
-  const traerParking = await parqueadero.findOne({ nombre_Parqueadero: parkingName })
 
-  const traerResiednt = await Residente.findOne({ cedula: homeOwnerCC })
+  // console.log(parkingName)
+  // que pasara si no se ingresa el nombre del parqueadero porque no tiene.Y solucionado
 
-  const newvehicle = new vehiculo({
-    placa,
-    marca,
-    color,
-    tipo,
-    datos_extra,
-    parqueadero: traerParking._id,
-    ResidentOwner: traerResiednt._id
+  parqueadero.findOne({ nombre_Parqueadero: parkingName }, async (err, data) => {
+    if (err) {
+      return
+    } if (data) {
+      const traerParking = await parqueadero.findOne({ nombre_Parqueadero: parkingName })
 
+      const traerResiednt = await Residente.findOne({ cedula: homeOwnerCC })
+
+      const newvehicle = new vehiculo({
+        placa,
+        marca,
+        color,
+        tipo,
+        datos_extra,
+        parqueadero: traerParking._id,
+        ResidentOwner: traerResiednt._id
+
+      })
+      try {
+        const saveVehicle = await newvehicle.save()
+
+        traerParking.vehiculo = saveVehicle._id
+        await traerParking.save()
+
+        traerResiednt.vehiculo = traerResiednt.vehiculo.concat(saveVehicle._id)
+        // lo siguiente se hara mientras se encuntra como hacer deepsearhc
+        traerResiednt.parqueadero = traerParking._id
+        await traerResiednt.save()
+
+        res.status(200).json(saveVehicle)
+      } catch (error) {
+        return res.status(500).json({
+          mensaje: ` Ocurrio un error al crear un vehiculo', ${error}`,
+          error
+        })
+      }
+    } else {
+      const traerResiednt = await Residente.findOne({ cedula: homeOwnerCC })
+      // Quedan por realizar mas confirmaciones, como por ejemplo si el CC que se da no existe o no coincide, posteriormente implmentar
+      const newvehicle = new vehiculo({
+        placa,
+        marca,
+        color,
+        tipo,
+        datos_extra,
+        ResidentOwner: traerResiednt._id
+
+      })
+      try {
+        const saveVehicle = await newvehicle.save()
+
+        traerResiednt.vehiculo = traerResiednt.vehiculo.concat(saveVehicle._id)
+        await traerResiednt.save()
+
+        res.status(200).json(saveVehicle)
+      } catch (error) {
+        return res.status(500).json({
+          mensaje: `Ocurrio un error al crear un vehiculo', ${error}`,
+          error
+        })
+      }
+    }
   })
-  try {
-    const saveVehicle = await newvehicle.save()
-
-    traerParking.vehiculo = traerParking.vehiculo.concat(saveVehicle._id)
-    await traerParking.save()
-
-    traerResiednt.vehiculo = traerResiednt.vehiculo.concat(saveVehicle._id)
-    await traerResiednt.save()
-
-    res.status(200).json(saveVehicle)
-  } catch (error) {
-    return res.status(500).json({
-      mensaje: `Ocurrio un error', ${error}`,
-      error
-    })
-  }
 })
 
 router.get('/vehiculos', async (req, res) => {
@@ -64,3 +100,5 @@ router.get('/vehiculos', async (req, res) => {
     })
   }
 })
+
+module.exports = router
