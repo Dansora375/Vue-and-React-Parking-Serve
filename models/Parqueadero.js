@@ -23,10 +23,7 @@ const ParqueaderoSche = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     re: 'vehiculo'
   },
-  havePaq: {
-    type: Boolean,
-    default: true
-  },
+
   assigned: {
     type: Boolean,
     default: false

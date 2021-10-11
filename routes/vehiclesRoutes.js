@@ -44,7 +44,6 @@ router.post('/vehiculos', async (req, res) => {
 
         traerResiednt.vehiculo = traerResiednt.vehiculo.concat(saveVehicle._id)
         // lo siguiente se hara mientras se encuntra como hacer deepsearhc
-        traerResiednt.parqueadero = traerParking._id
         await traerResiednt.save()
 
         res.status(200).json(saveVehicle)

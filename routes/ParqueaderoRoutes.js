@@ -12,15 +12,16 @@ router.put('/parqueadero', async (req, res) => {
     aptoNum,
     tower
   } = req.body
-
-  const traerHogar = await Hogar.findOne({
-    apto_num: aptoNum, tower: tower
-  })
-  const traerParqueadero = await Parqueadero.findOne({
-    nombre_Parqueadero: nombreParqueadero
-  })
-  // const IdParq = traerParqueadero._id
+  // SSi se desea se podrai implentar de forma que lo que se reciba de la vista sea directamente el ID del hogar, y tambien con el ID edl parqueadero
   try {
+    const traerHogar = await Hogar.findOne({
+      apto_num: aptoNum, tower: tower
+    })
+    const traerParqueadero = await Parqueadero.findOne({
+      nombre_Parqueadero: nombreParqueadero
+    })
+    // const IdParq = traerParqueadero._id
+
     const updatedParq = await Parqueadero.findOneAndUpdate({ _id: traerParqueadero._id }, { hogar: traerHogar._id, assigned: true }, { new: true })
     // const saveUpdate = await updatedParq.save()
     // console.log(updatedParq)

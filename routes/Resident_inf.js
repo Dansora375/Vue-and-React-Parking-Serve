@@ -5,17 +5,19 @@ import Hogar from '../models/Hogar'
 // import EntradaVehiculo from '../models/principal_models/visitante'
 const router = express.Router()
 
-// PARA OBTENER LA LISTA DE RESIDENTES PARA LA VISTA DE INGRESO DE VEHICULOS, en la que se busca filtrar por aquellos que tengan parqueadero.PDT(no utulizar esta ruta)
-router.get('/residentListProbando', async (req, res) => {
-  const populateParqueadero = {
-    path: 'vehiculo',
-    model: 'vehiculo',
-    populate: {
-      path: 'parqueadero',
-      model: 'parqueadero'
-    }
-  }
-
+// Populate utilizado en las rutas get
+const populateParqueadero = {
+  path: 'vehiculo',
+  model: 'vehiculo',
+  populate: {
+    path: 'parqueadero',
+    model: 'parqueadero',
+    select: 'nombre_Parqueadero'
+  },
+  select: 'placa tipo '
+}
+// PARA OBTENER LA LISTA DE RESIDENTES PARA LA VISTA DE INGRESO DE VEHICULOS, en la que se busca filtrar por aquellos que tengan parqueadero.
+router.get('/residentList', async (req, res) => {
   try {
     const verificarParqueadero = await Residente.find({ })
       .populate('hogar', {
@@ -29,102 +31,19 @@ router.get('/residentListProbando', async (req, res) => {
         date: 1
       })
       .populate(populateParqueadero)
-    // const x = {}
-    // verificarParqueadero.forEach(element => {
-    //   if (element.vehiculo[0].parqueadero) {
-    //     console.log(element)
-    //   }
-    // }
 
-    // )
-    // console.log(verificarParqueadero)
-
-    // const lista = await Residente.find({ vehiculo: { $all: ['parqueadero': {nombre_Parqueadero:'A2'}] } })
-
-    // const parqueadero = await verificarParqueadero.find({ nombre: 'Ricardo' })
-    // // sI NO SE PUEDE PROBAR A RELIAZAR LA CONSUlta con pupulate en una lista sin filtro y luego aplicarle el filtro
-    // // const lista = await Residente.find({})
-    // .populate('hogar', {
-    //   apto_num: 1,
-    //   tower: 1,
-    //   date: 1
-
-    // })
-    // .populate('hogar_habitando', {
-    //   apto_num: 1,
-    //   tower: 1,
-    //   date: 1
-
-    // })
-    // .populate(populateParqueadero)
-
-    // console.log(verificarParqueadero)
-    // console.log(lista)
-    // .populate('vehiculo', {
-    //   placa: 1,
-    //   marca: 1,
-    //   color: 1,
-    //   tipo: 1,
-    //   datos_extra: 1,
-    //   parqueadero: 1
-    // })
-
-    // }
-    const x = []
-    let a = ''
     verificarParqueadero.forEach(element => {
-      if (element.vehiculo[0].parqueadero) {
-        a = x.push(element)
+      for (const e of element.vehiculo) {
+        if (e.parqueadero) {
+          res.json(element)
+        }
       }
-    }
-
-    )
-    console.log(a)
+    })
     // res.status(200).json(parqueadero)
-    res.status(200).json(x)
+    // res.status(200).json(verificarParqueadero)
   } catch (error) {
     return res.status(400).json({
-      mensaje: `Ocurrio un error', ${error}`,
-      error
-    })
-  }
-})
-
-// Provivonalmente se a hecho que al postear un vehiculo en porpiedad de una persona, se agregue en el dato "haveParking"de su esquema, el bolean true para realizar un filtrado o consulta
-// --------------------------------------
-router.get('/residentList', async (req, res) => {
-  // const populateParqueadero = {
-  //   path: 'vehiculo',
-  //   model: 'vehiculo',
-  //   populate: {
-  //     path: 'parqueadero',
-  //     model: 'parqueadero'
-  //   }
-  // }
-
-  const verificarParqueadero = await Residente.find({ parqueadero: true })
-    .populate('hogar', {
-      apto_num: 1,
-      tower: 1
-    })
-    .populate('hogar_habitando', {
-      apto_num: 1,
-      tower: 1
-    })
-    .populate('vehiculo', {
-      placa: 1,
-      tipo: 1,
-      datos_extra: 1
-    })
-    .populate('parqueadero', {
-      nombre_Parqueadero: 1
-    })
-    // .populate(populateParqueadero)
-  try {
-    res.json(verificarParqueadero)
-  } catch (error) {
-    return res.status(400).json({
-      mensaje: `Ocurrio un error' al obtener la lista de los datos de los residentes, ${error}`,
+      mensaje: `Ocurrio un error al obtener la lista de residentes', ${error}`,
       error
     })
   }
@@ -144,16 +63,8 @@ router.get('/residentInf', async (req, res) => {
         tower: 1,
         date: 1
       })
-      .populate('vehiculo', {
-        placa: 1,
-        marca: 1,
-        color: 1,
-        tipo: 1,
-        datos_extra: 1
-      })
-      .populate('parqueadero', {
-        nombre_Parqueadero: 1
-      })
+      .populate(populateParqueadero)
+
     res.status(200).json(residentes)
   } catch (error) {
     return res.status(400).json({
@@ -185,8 +96,8 @@ router.post('/residentInf', async (req, res) => {
         cedula,
         telefono,
         hogar_habitando: hogar_habitando._id
-
       })
+
       try {
         const saveResident = await resident.save()
 
@@ -217,3 +128,46 @@ router.post('/residentInf', async (req, res) => {
 })
 
 module.exports = router
+
+// router.get('/residentList', async (req, res) => {
+//   // const populateParqueadero = {
+//   //   path: 'vehiculo',
+//   //   model: 'vehiculo',
+//   //   populate: {
+//   //     path: 'parqueadero',
+//   //     model: 'parqueadero'
+//   //   }
+//   // }
+//   try {
+//     const verificarParqueadero = await Residente.find({ })
+//       .populate('hogar', {
+//         apto_num: 1,
+//         tower: 1
+//       })
+//       .populate('hogar_habitando', {
+//         apto_num: 1,
+//         tower: 1
+//       })
+//       .populate('vehiculo', {
+//         placa: 1,
+//         tipo: 1,
+//         datos_extra: 1
+//       })
+//       .populate('parqueadero', {
+//         nombre_Parqueadero: 1
+//       })
+//     // .populate(populateParqueadero)
+//     // verificarParqueadero.forEach(element => {
+//     //   if (element.parqueadero) {
+//     //     res.json(element)
+//     //   }
+//     // })
+//     res.json(verificarParqueadero)
+//     // const parqueadero = verificarParqueadero.find({ parqueadero: { nombre_Parqueadero: 'A-1' } })
+//   } catch (error) {
+//     return res.status(400).json({
+//       mensaje: `Ocurrio un error' al obtener la lista de los datos de los residentes, ${error}`,
+//       error
+//     })
+//   }
+// })

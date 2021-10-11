@@ -19,7 +19,7 @@ const vehiculoSche = new mongoose.Schema({
     default: ['Carro', 'Moto', 'Ninguno'].lastItem
   },
   datos_extra: String,
-  // Al crear eL vehiculo se le necesitara ingresar el nombre del parqueadero, apra poderlo relacionar
+  // Al crear eL vehiculo si se le ingresa el nombre del parqueadero se relacionara , no es obligatoria ya que residentes pueden tener vehiculos sin parqueadero
   parqueadero: {
     type: Schema.Types.ObjectId,
     ref: 'parqueadero'

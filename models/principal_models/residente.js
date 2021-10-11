@@ -37,13 +37,10 @@ const residenteSchema = new mongoose.Schema({
   vehiculo: [{
     type: Schema.Types.ObjectId,
     ref: 'vehiculo'
-  }],
+  }]
   // prvicioanlmente se tenfran los datos del
   // parqueadero aquimientras se encuntra como hacer deepsearch
-  parqueadero: {
-    type: Schema.Types.ObjectId,
-    ref: 'parqueadero'
-  }
+
 },
 { timestamps: true },
 opts

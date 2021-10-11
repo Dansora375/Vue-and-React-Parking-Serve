@@ -35,17 +35,17 @@ router.post('/hogares', async (req, res) => {
 })
 
 router.get('/hogares', async (req, res) => {
+  const parqAndVehicle = {
+    path: 'parqueadero',
+    model: 'parqueadero',
+    populate: {
+      path: 'vehiculo',
+      model: 'vehiculo',
+      select: 'placa marca tipo'
+    },
+    select: 'nombre_Parqueadero assigned'
+  }
   try {
-    const parqAndVehicle = {
-      path: 'parqueadero',
-      model: 'parqueadero',
-      populate: {
-        path: 'vehiculo',
-        model: 'vehiculo',
-        select: 'placa marca tipo'
-      },
-      select: 'nombre_Parqueadero assigned'
-    }
     const hogares = await Hogar.find({})
       .populate('home_owner', {
         nombre: 1,
@@ -60,7 +60,6 @@ router.get('/hogares', async (req, res) => {
       //   nombre_Parqueadero: 1,
       //   vehiculo: 1,
       //   assigned: 1
-
     // })
     res.status(200).json(hogares)
   } catch (error) {
