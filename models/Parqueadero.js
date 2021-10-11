@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
-
+const opts = {
+  // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) }
+}
 // Por ahora no abara opcion de crear parqueaderos desde la vista, los parqueaderos seran ingresados desde la base, seran una lista estatica con la finalidad de asignarlos a un determinado hogar
 const ParqueaderoSche = new mongoose.Schema({
 
@@ -20,11 +23,17 @@ const ParqueaderoSche = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     re: 'vehiculo'
   },
+  havePaq: {
+    type: Boolean,
+    default: true
+  },
   assigned: {
     type: Boolean,
     default: false
   }
-})
+},
+{ timestamps: true },
+opts)
 
 const parqueadero = mongoose.model('parqueadero', ParqueaderoSche)
 export default parqueadero

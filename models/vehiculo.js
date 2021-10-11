@@ -1,7 +1,10 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
-
+const opts = {
+  // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) }
+}
 const vehiculoSche = new mongoose.Schema({
 
   placa: {
@@ -27,7 +30,10 @@ const vehiculoSche = new mongoose.Schema({
     ref: 'Residente'
   }
 
-})
+},
+{ timestamps: true },
+opts
+)
 
 const vehiculo = mongoose.model('vehiculo', vehiculoSche)
 export default vehiculo

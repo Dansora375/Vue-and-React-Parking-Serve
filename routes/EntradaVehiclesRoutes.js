@@ -15,7 +15,9 @@ router.get('/lista', async (req, res) => {
     res.json(lista)
   } catch (error) {
     return res.status(400).json({
-      mensaje: 'Ha ocurrido un error al intentar obtener la lista de vehiculos en entrada',
+
+      mensaje: `Ocurrio un error Ha ocurrido un error al intentar 
+      obtener la lista de vehiculos en entrada', ${error}`,
       error
     })
   }
@@ -29,7 +31,7 @@ router.post('', async (req, res) => {
     res.status(200).json(entrada_nuevo)
   } catch (error) {
     return res.status(500).json({
-      mensaje: `Ocurrio un error', ${error}`,
+      mensaje: `Ocurrio un error al realizar el post de la entrada de vehiculos visitantes', ${error}`,
       error
     })
   }
@@ -41,7 +43,7 @@ router.get('', async (req, res) => {
     res.status(200).json(InfParkDB)
   } catch (error) {
     return res.status(400).json({
-      mensaje: `Ocurrio un error', ${error}`, error
+      mensaje: `Ocurrio un error al intentar obtener los visitantes', ${error}`, error
     })
   }
 })
@@ -59,7 +61,7 @@ router.put('/salida', async (req, res) => {
       res.json(salida)
     } catch (error) {
       return res.status(400).json({
-        mensaje: 'Ocurrio un error al actualizar el dato',
+        mensaje: `Ocurrio un error al intentar editar un visitante', ${error}`,
         error
       })
     }

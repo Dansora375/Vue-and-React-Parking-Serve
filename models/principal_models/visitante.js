@@ -1,7 +1,10 @@
 import mongoose from 'mongoose'
 // const Schema = mongoose.Schema
 // const options_type = ['Carro', 'Moto', 'Ninguno']
-
+const opts = {
+  // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) }
+}
 // Creando el Schema
 const NewVisitorSche = new mongoose.Schema({
 // Datos del visitante
@@ -41,13 +44,18 @@ const NewVisitorSche = new mongoose.Schema({
     type: Boolean,
     default: true
   },
+  // En cuanto se cree un nuevo ingreso de
+  // visitante la fecha entrada sera establecida
   hora_entrada: {
     type: Date,
     default: Date.now
   },
   hora_salida: Date
 
-})
+},
+{ timestamps: true },
+opts
+)
 
 // Creando el modelo
 const Entrada_vehiculo = mongoose.model('Entrada_vehiculo', NewVisitorSche)

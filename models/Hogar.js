@@ -1,6 +1,9 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
-
+const opts = {
+  // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+  timestamps: { currentTime: () => Math.floor(Date.now() / 1000) }
+}
 const HogaresSchema = new mongoose.Schema({
   // como prueba para mostrarlos por consola se iniciara con los datos de visitantes
   apto_num: {
@@ -21,17 +24,16 @@ const HogaresSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Residente'
   }],
-  // Este se relacionara y contendra el dato del parqueadero al que esta ligado, en cuanto en el put (edicionde) del parqueadero se le asigne a que apto_num y tower pertenece
+  // Este se relacionara y contendra el dato del parqueadero al que esta ligado, en cuanto en el put (edicion) del parqueadero se le asigne a que apto_num y tower pertenece (VISTA HOGARES)
   parqueadero: {
     type: Schema.Types.ObjectId,
     ref: 'parqueadero'
-  },
-  date: {
-    type: Date,
-    default: new Date()
   }
 
-})
+},
+{ timestamps: true },
+opts
+)
 
 const Hogar = mongoose.model('Hogar', HogaresSchema)
 export default Hogar
