@@ -26,7 +26,10 @@ const HogaresSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'parqueadero'
   },
-  date: Date
+  date: {
+    type: Date,
+    default: new Date()
+  }
 
 })
 

@@ -2,7 +2,8 @@ import express from 'express';
 import morgan from 'morgan'; 
 import cors from 'cors'; 
 import path from 'path';
-import bcrypt from 'bcrypt'; //m
+import bcrypt from 'bcrypt'; 
+// import Permission from '/utils/Permission.js';
 
 
 const app = express()
@@ -25,6 +26,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+// app.use(Permission)
 
 app.use(express.urlencoded({ extended: true }))
 

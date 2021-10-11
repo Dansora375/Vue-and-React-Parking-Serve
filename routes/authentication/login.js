@@ -1,7 +1,12 @@
-import e from 'express'
+/* eslint-disable semi */
+/* eslint-disable new-cap */
+// import e from 'express'
+// eslint-disable-next-line no-unused-vars
+// import Permission from '../../utils/Permission';
 import express, { json } from 'express'
 
 import User from '../../models/user'
+
 const router = express.Router()
 
 function dataSend (data, error, msg, created, userExists) {
@@ -81,6 +86,26 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.log(error)
     res.status(500).json(new dataLogin({}, false, error, false))
+  }
+})
+
+router.post('/prueba', async (req, res) => {
+  try {
+    const user = 'Cristian2024';
+    const password = '48596712';
+    // const usuario = Permission(user,password)
+    const data = await User.getPermission(user, password);
+    if (data !== 1) {
+      res.status(500).json({
+        error: 'El usuario no posee los permisos suficientes'
+      });
+    } else {
+      // haga su consulta/insercion/update a gusto
+    }
+    console.log('El usuario tiene un permiso de nivel : \t', data);
+    res.json({ data });
+  } catch (error) {
+    console.log(error)
   }
 })
 

@@ -2,6 +2,7 @@ import express from 'express'
 
 import Residente from '../models/principal_models/residente'
 import Hogar from '../models/Hogar'
+// import EntradaVehiculo from '../models/principal_models/visitante'
 const router = express.Router()
 
 // PARA OBTENER LA LISTA DE RESIDENTES PARA LA VISTA DE INGRESO DE VEHICULOS
@@ -10,7 +11,7 @@ router.get('/residentList', async (req, res) => {
   try {
     let lista
     if (finalizadas) {
-      lista = await Entrada_vehiculo.find({})
+      lista = await Residente.find({})
         .populate('hogar', {
           apto_num: 1,
           tower: 1,
