@@ -12,11 +12,12 @@ const ResidenteEntrada = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Residente'
   },
-
+  // Registra si el ingreeso esta activo o no
   activo: {
     type: Boolean,
     default: true
   },
+  // Sirve para regitrar si el parqueadero esta ocupado, estas dos se editaran al terminar el parqueadero o ingreso
   ocupado: {
     type: Boolean,
     default: true

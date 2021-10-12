@@ -74,7 +74,9 @@ router.get('/ingresoResident', async (req, res) => {
     })
   }
 })
-
+// Este put se utilizara para implementarlo en cuanto en la vista se le de
+// terminar parqueadero o se confirme la tarifa correspondiente a la finalizacion
+// del ingreso de un "vehiculo Residente"
 router.put('/ingresoResident', async (req, res) => {
   const {
     id,
@@ -83,14 +85,14 @@ router.put('/ingresoResident', async (req, res) => {
   try {
     const ResIngresoUpdated = await IngresoResident.findOneAndUpdate(
       { _id: id },
-      { hora_salida: horaSalida },
+      { hora_salida: horaSalida, activo: false, ocupado: false },
       { new: true }
     )
 
     res.status(200).json(ResIngresoUpdated)
   } catch (error) {
     return res.status(400).json({
-      mensaje: `Ocurrio un error al agregar la hora de salida', ${error}`,
+      mensaje: `Ocurrio un error al terminar el parqueadero del residente', ${error}`,
       error
     })
   }

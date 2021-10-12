@@ -67,5 +67,25 @@ router.put('/salida', async (req, res) => {
     }
   }
 })
+// Este put se utilizara para modificar el ingreso de un visitante al darle en la vista a terminar parqueadero
+router.put('/endParkingVis ', async (req, res) => {
+  const {
+    id,
+    horaSalida
+  } = req.body
+  try {
+    const VisIngresoUpdated = await Entrada_vehiculo.findOneAndUpdate(
+      { _id: id },
+      { hora_salida: horaSalida, activo: false, ocupado: false },
+      { new: true }
+    )
 
+    res.status(200).json(VisIngresoUpdated)
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: `Ocurrio un error al terminar el parqueadero del visitante', ${error}`,
+      error
+    })
+  }
+})
 module.exports = router
