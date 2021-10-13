@@ -100,16 +100,23 @@ userSchema.methods.isCorrectPassword = function (password, callback) {
       callback(err)
     } else {
       callback(err, same)
+      return same
     }
   })
 }
 
-userSchema.methods.getType = function () {
+userSchema.methods.getType = function getType () {
   const type = this.type;
   const typeLevel = types[defineType(type)].nivel;
+  console.log(type)
   return { type, typeLevel };
 }
-
+function getType (tipo) {
+  const type = tipo;
+  const typeLevel = types[defineType(type)].nivel;
+  console.log(type)
+  return { type, typeLevel };
+}
 /**  METODOS ESTATICOS
  * Hacen referencia a los metodos que no tienen que ser llamados
    desde un resultado de un query
@@ -125,13 +132,42 @@ userSchema.static('getPermission', async function (usuario, password) {
   // mongoose.model.clone() evita un error al ejecutar varias veces la misma funcion
   const dato = await this.findOne({ user: usuario }).clone();
   // dato.isCorrectPassword(password);
-  console.log(dato.getType)
+  // console.log(dato.getType)
+  console.log(dato.isCorrectPassword(password, (error, result) => {
+    if (error) {
+      return false
+    }
+    return result;
+  }))
   if (dato === undefined || dato === null) {
     return 0;
   }
   return dato.getType.typeLevel;
 })
 
+userSchema.static('getPermission2', async function (usuario, password, callback) {
+  // mongoose.model.lean() convierte el resultado de un query en un objeto de javascript, osea un json
+  // mongoose.model.clone() evita un error al ejecutar varias veces la misma funcion
+  const dato = await this.findOne({ user: usuario }).clone();
+  // console.log(dato.type)
+  let datoResult
+  if (dato === undefined || dato === null) {
+    datoResult = 0;
+    // console.log(datoResult)
+  } else {
+    datoResult = getType(dato.type).typeLevel;
+    // console.log(datoResult)
+  }
+  // console.log(dato.getType)
+  dato.isCorrectPassword(password, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      // console.log(datoResult)
+      callback(error, { password: result, permission: datoResult })
+    }
+  })
+})
 // Creando el modelo
 const User = mongoose.model('User', userSchema)
 

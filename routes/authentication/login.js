@@ -3,7 +3,7 @@
 // import e from 'express'
 // eslint-disable-next-line no-unused-vars
 // import Permission from '../../utils/Permission';
-import express, { json } from 'express'
+import express from 'express'
 
 import User from '../../models/user'
 
@@ -33,14 +33,11 @@ router.post('/register', async (req, res) => {
         res.send(new dataSend(result, err, 'El usuario o correo ya existen', false, true))
       } else {
         const newUser = User.create(body)
-        res.send(newUser)
+        res.send(new dataSend(newUser))
       }
     })
   } catch (error) {
-    res.status(500).json({
-      mensaje: 'Ha ocurrido un error al crear un nuevo usuario',
-      error
-    })
+    res.status(500).json(new dataSend({}, error, {}, false, false))
   }
 })
 
@@ -65,17 +62,32 @@ router.post('/login', async (req, res) => {
       // return;
     }
 
-    User.findOne(data, (error, user) => {
+    User.findOne(data, (error, userResult) => {
+      // eliminando el password de los datos que puedan ser emitidos
+      const {
+        Cc,
+        name,
+        user,
+        email,
+        type
+      } = userResult
+      const usuarioData = {
+        Cc,
+        name,
+        user,
+        email,
+        type
+      }
       if (error) {
         res.sendStatus(500).json(new dataLogin({}, false, error, false))
-      } else if (!user) {
+      } else if (!userResult) {
         res.send(new dataLogin({}, 'No se pudo loguear a la base', false))
       } else {
-        user.isCorrectPassword(body.password, (error, result) => {
+        userResult.isCorrectPassword(body.password, (error, result) => {
           if (error) {
             res.sendStatus(500).json(new dataLogin({}, false, error, false))
           } else if (result) {
-            res.send(new dataLogin(user, {}, true))
+            res.send(new dataLogin(usuarioData, {}, true))
           } else {
             res.send(new dataLogin({}, 'usuario o contraseña incorrecta', false))
           }
