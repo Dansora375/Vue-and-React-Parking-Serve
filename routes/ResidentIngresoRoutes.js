@@ -40,7 +40,7 @@ router.get('/ingresoResident', async (req, res) => {
         model: 'parqueadero',
         select: 'nombre_Parqueadero '
       },
-      select: 'placa tipo datos_extra haveParq'
+      select: 'placa tipo datos_extra haveParq marca color'
     }
   }
 
@@ -54,7 +54,7 @@ router.get('/ingresoResident', async (req, res) => {
 
   const populateHogarHabitando = {
     path: 'residente',
-    select: 'nombre',
+    select: 'nombre cedula telefono',
     populate: {
       path: 'hogar_habitando',
       select: 'apto_num tower'

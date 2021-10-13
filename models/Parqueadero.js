@@ -27,6 +27,22 @@ const ParqueaderoSche = new mongoose.Schema({
   assigned: {
     type: Boolean,
     default: false
+  },
+  Ocupado: {
+    type: Boolean,
+    default: false
+  },
+  tipoVehicle: {
+    type: String,
+    enum: ['Carro', 'Moto'],
+    default: ['Carro', 'Moto'].lastItem,
+    required: [true, 'tipo de vehiculo del parqueadero obligatorio']
+  },
+  tipoPersonIngr: {
+    type: String,
+    enum: ['Residente', 'Visitante'],
+    default: ['Residente', 'Visitante'].lastItem,
+    required: [true, 'tipo de persona del parqueadero Obligatorio']
   }
 
 },
