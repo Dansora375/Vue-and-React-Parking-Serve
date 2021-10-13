@@ -39,6 +39,7 @@ app.use('/api/', require('./routes/Resident_inf'))
 app.use('/api/', require('./routes/ResidentIngresoRoutes'))
 app.use('/api/', require('./routes/vehiclesRoutes'))
 app.use('/api/authentication', require('./routes/authentication/login'))
+app.use('/api/buildings/towers', require('./routes/TowerRoutes'))
 
 // app.use('/api', require('./routes/Info_parq_Routes'));
 

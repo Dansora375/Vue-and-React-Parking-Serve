@@ -6,7 +6,6 @@ const router = express.Router()
 
 router.post('/nuevo-vehiculo', async (req, res) => {
   const body = req.body
-  
   try {
     const notaDB = await Vehiculo.create(body)
     const vehiculo = await Vehiculo.findById(

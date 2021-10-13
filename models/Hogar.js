@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import Tower from './Tower'
+
 const Schema = mongoose.Schema
 const opts = {
   // Make Mongoose use Unix time (seconds since Jan 1, 1970)
@@ -34,6 +36,17 @@ const HogaresSchema = new mongoose.Schema({
 { timestamps: true },
 opts
 )
+
+HogaresSchema.methods.isThereSpace = function (torre, callback) {
+  Tower.findOne({ tower: torre }, (error, result) => {
+    if (error) {
+      callback(error)
+    } else {
+      console.log(result)
+      callback(error, result)
+    }
+  })
+}
 
 const Hogar = mongoose.model('Hogar', HogaresSchema)
 export default Hogar
