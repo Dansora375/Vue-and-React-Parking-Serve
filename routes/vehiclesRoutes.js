@@ -33,8 +33,8 @@ router.post('/vehiculos', async (req, res) => {
         tipo,
         datos_extra,
         parqueadero: traerParking._id,
-        ResidentOwner: traerResiednt._id
-
+        ResidentOwner: traerResiednt._id,
+        haveParq: true
       })
       try {
         const saveVehicle = await newvehicle.save()

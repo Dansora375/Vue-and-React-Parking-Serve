@@ -28,6 +28,7 @@ const ParqueaderoSche = new mongoose.Schema({
     type: Boolean,
     default: false
   }
+
 },
 { timestamps: true },
 opts)

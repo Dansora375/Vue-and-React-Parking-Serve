@@ -33,13 +33,14 @@ router.get('/ingresoResident', async (req, res) => {
     model: 'Residente',
     populate: {
       path: 'vehiculo',
+      match: { haveParq: true },
       model: 'vehiculo',
       populate: {
         path: 'parqueadero',
         model: 'parqueadero',
-        select: 'nombre_Parqueadero'
+        select: 'nombre_Parqueadero '
       },
-      select: 'placa tipo datos_extra'
+      select: 'placa tipo datos_extra haveParq'
     }
   }
 

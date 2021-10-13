@@ -28,6 +28,10 @@ const vehiculoSche = new mongoose.Schema({
   ResidentOwner: {
     type: Schema.Types.ObjectId,
     ref: 'Residente'
+  },
+  haveParq: {
+    type: Boolean,
+    default: false
   }
 
 },
