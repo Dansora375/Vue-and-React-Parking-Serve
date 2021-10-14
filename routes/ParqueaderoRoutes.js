@@ -43,29 +43,29 @@ router.put('/parqueaderoHogares', async (req, res) => {
 //  se piensa utilizar para  para CAMBIAR LA PROPIEDAD  del dato Ocupado a true en la vista de
 // Ingreso cuando se seleccione un aprqueadero
 
-router.put('/parqueaderoIngreso', async (req, res) => {
+router.put('/parqueaderoIngreso2', async (req, res) => {
   // DEFINIR QUE DATOS SE PIENSAN ENVIAR PARA DEFINIR QUE
   // PARQUEADERO SE EDITARA AQU ABAJO
   const {
-    nombreParqueadero
+    id,
+    ocupado
     // Mirar si se podrai dejar con el id edl parq
   } = req.body
 
   try {
-    const traerParqueadero = await Parqueadero.findOne({
-      nombre_Parqueadero: nombreParqueadero
+    await Parqueadero.findByIdAndUpdate({ _id: id }, { Ocupado: ocupado }, { new: true }, (error, result) => {
+      if (error) {
+        res.send({ data: `${error}`, completed: false })
+      } else if (result) {
+        res.send({ data: result, completed: true })
+      } else {
+        res.send({ data: 'No se pudo realizar la accion', completed: false })
+      }
     })
-    // const IdParq = traerParqueadero._id
-
-    const updatedParq = await Parqueadero.findOneAndUpdate({ _id: traerParqueadero._id }, { Ocupado: true }, { new: true })
-    // const saveUpdate = await updatedParq.save()
-    // console.log(updatedParq)
-
-    res.status(201).json(updatedParq)
   } catch (error) {
-    return res.status(400).json({
-      mensaje: `Ocurrio un error al editar el parqueadero', ${error}`,
-      error
+    return res.send({
+      data: `${error}`,
+      completed: false
     })
   }
 })
@@ -100,7 +100,15 @@ router.post('/parqueadero', async (req, res) => {
 // aquellos que tengan el dato "Ocupado :false"
 router.get('/parqueaderoIngresoVis', async (req, res) => {
   try {
-    const parqueaderos = await Parqueadero.find({ Ocupado: false, tipoPersonIngr: 'Visitante' })
+    await Parqueadero.find({ Ocupado: false, tipoPersonIngr: 'Visitante' }, (error, result) => {
+      if (error) {
+        res.send({ data: error.message, completed: false })
+      } else if (result) {
+        res.send({ data: result, completed: true })
+      } else {
+        res.send({ data: 'no se pudieron listar los parqueaderos', completed: false })
+      }
+    }).clone
     // .populate('hogar', {
     //   apto_num: 1,
     //   tower: 1
@@ -115,11 +123,11 @@ router.get('/parqueaderoIngresoVis', async (req, res) => {
     // Sise necesita obtener los datos populados de vehiculos para
     // este get, solo descomentar los de arriba
 
-    res.status(200).json(parqueaderos)
+    // res.send({ data: parqueaderos, completed: true })
   } catch (error) {
-    return res.status(400).json({
-      mensaje: `Ocurrio un error al obtener un parqueadero', ${error}`,
-      error
+    return res.send({
+      data: `Ocurrio un error al obtener un parqueadero', ${error}`,
+      completed: false
     })
   }
 })

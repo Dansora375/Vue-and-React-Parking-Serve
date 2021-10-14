@@ -50,6 +50,11 @@ const NewVisitorSche = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  parqueadero: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Parqueadero',
+    required: [true, 'El dato del parqueadero es obligatorio al crear un nuevo ingreso']
+  },
   hora_salida: Date
   // Recordar agregar parqueadero
 

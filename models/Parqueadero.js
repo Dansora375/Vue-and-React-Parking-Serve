@@ -21,7 +21,7 @@ const ParqueaderoSche = new mongoose.Schema({
   // RECORDAR TRAER EL DATO DEL TIPO DE VEHICULO con el poPULATE
   vehiculo: {
     type: Schema.Types.ObjectId,
-    re: 'vehiculo'
+    ref: 'vehiculo'
   },
 
   assigned: {
