@@ -3,6 +3,7 @@ import express from 'express'
 import Hogar from '../models/Hogar'
 import Residente from '../models/principal_models/residente'
 import User from '../models/user'
+
 const router = express.Router()
 
 router.post('/hogares', async (req, res) => {
@@ -96,6 +97,55 @@ router.get('/hogares', async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       mensaje: `Ocurrio un error al obtener los hogares', ${error}`, error
+    })
+  }
+})
+
+/**
+ * Ruta para modificar el owner de un hogar
+ */
+router.put('/hogares/owner', async (req, res) => {
+  const {
+    homeId,
+    homeOwnerId,
+    user,
+    password
+  // Se debe hacer en la vista obligatorio que se ingrese el CC DE PROPIETARIO EDL HOGAR
+  } = req.body
+  try {
+    // Consultando los permisos del usuario en cuestion
+    await User.getPermission2(user, password, async (error, result) => {
+      if (error) {
+        res.send({ data: error, completed: false })
+      } else if (result.password) {
+        // ahora se procede a validar si el usuario tiene los permisos para esta ruta
+        // en este caso, permisos de nivel 1
+        if (result.permission === 1) {
+          // si tiene los permisos, se puede proceder a hacer la ejecución de la consulta
+          await Hogar.findByIdAndUpdate(homeId, { home_owner: homeOwnerId }, (error, result) => {
+            if (error) {
+              console.log('llego hasta el error de permisos', error)
+              res.send({ data: error, completed: false })
+            } else if (result) {
+              res.send({ data: result, completed: true })
+            } else {
+              res.send({ data: 'No se pudo hacer el cambio en la base', completed: false })
+            }
+          }).clone()
+        } else {
+          // en este punto, el usuario no tiene permisos para completar la función
+          res.send({ data: 'No tienes los permisos suficientes', completed: false })
+        }
+      } else {
+        // llegados a este punto, la contraseña dada es incorrecta
+        res.send({ data: 'Contraseña incorrecta', completed: false })
+      }
+    })
+  } catch (error) {
+    // console.log('2:', error)
+    return res.send({
+      data: error,
+      completed: false
     })
   }
 })

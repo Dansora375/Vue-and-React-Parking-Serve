@@ -18,6 +18,7 @@ const populateParqueadero = {
 }
 // PARA OBTENER LA LISTA DE RESIDENTES PARA LA VISTA DE INGRESO DE VEHICULOS, en la que se busca filtrar por aquellos que tengan parqueadero.
 router.get('/residentList', async (req, res) => {
+  const data = []
   try {
     const verificarParqueadero = await Residente.find({ })
       .populate('hogar', {
@@ -35,10 +36,14 @@ router.get('/residentList', async (req, res) => {
     verificarParqueadero.forEach(element => {
       for (const e of element.vehiculo) {
         if (e.parqueadero) {
-          res.json(element)
+          // console.log(e, '\n')
+          // console.log(element)
+          data.push(element)
+          // res.json(element)
         }
       }
     })
+    res.json(data)
     // res.status(200).json(parqueadero)
     // res.status(200).json(verificarParqueadero)
   } catch (error) {

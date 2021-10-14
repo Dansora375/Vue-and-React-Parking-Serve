@@ -1,6 +1,9 @@
+/* eslint-disable camelcase */
 import express from 'express'
 
+// eslint-disable-next-line camelcase
 import Entrada_vehiculo from '../models/principal_models/visitante'
+import parqueadero from '../models/Parqueadero'
 const router = express.Router()
 
 router.get('/lista', async (req, res) => {
@@ -27,6 +30,7 @@ router.get('/lista', async (req, res) => {
 router.post('', async (req, res) => {
   const body = req.body
   try {
+    // eslint-disable-next-line camelcase
     const entrada_nuevo = await Entrada_vehiculo.create(body)
     res.status(200).json(entrada_nuevo)
   } catch (error) {
@@ -50,20 +54,34 @@ router.get('', async (req, res) => {
 
 // funcion para actualizar el estado de un registro
 router.put('/salida', async (req, res) => {
-  const id = req.query.id
-  const isEnding = req.query.terminado
-  if (id == null || isEnding == null) {
-    res.json({ error: 'el id y el valor son obligatorios' })
-    console.log(id, '  ', isEnding)
+  const {
+    id,
+    // eslint-disable-next-line camelcase
+    hora_salida
+  } = req.body
+  if (id == null || hora_salida == null) {
+    res.send({ data: 'el id y el valor son obligatorios', completed: false })
+    // console.log(id, '  ', isEnding)
   } else {
     try {
-      const salida = await Entrada_vehiculo.findByIdAndUpdate(id, { activo: !isEnding })
-      res.json(salida)
+      await Entrada_vehiculo.findByIdAndUpdate(id, { activo: false, hora_salida }, async (error, result) => {
+        if (error) {
+          res.send({ data: `${error}`, completed: false })
+        } else if (result) {
+          await parqueadero.findByIdAndUpdate(result.parqueadero, { Ocupado: false }, (err, resul) => {
+            if (err) {
+              res.send({ data: `${error}`, completed: false })
+            } else {
+              res.send({ data: result, completed: true })
+            }
+          }).clone()
+        } else {
+          res.send({ data: 'No se pudo actualizar', completed: false })
+        }
+      }).clone()
+      // res.send({ data: salida, completed: true })
     } catch (error) {
-      return res.status(400).json({
-        mensaje: `Ocurrio un error al intentar editar un visitante', ${error}`,
-        error
-      })
+      return res.send({ data: `${error}`, completed: false })
     }
   }
 })

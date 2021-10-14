@@ -61,7 +61,7 @@ router.get('/ingresoResident', async (req, res) => {
     }
   }
   try {
-    const ingresosResidents = await IngresoResident.find({ activo: true })
+    const ingresosResidents = await IngresoResident.find({ activo: true, ocupado: false })
       // .populate(populateApto)
       .populate(populateVehicle)
       .populate(populateHogar)
