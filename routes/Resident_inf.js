@@ -49,7 +49,7 @@ router.get('/residentList', async (req, res) => {
   }
 })
 
-// obtiene los datos de residentes
+// obtiene los datos de residentes sin ningun filtro
 router.get('/residentInf', async (req, res) => {
   try {
     const residentes = await Residente.find({})

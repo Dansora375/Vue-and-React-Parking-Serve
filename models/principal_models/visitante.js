@@ -51,6 +51,7 @@ const NewVisitorSche = new mongoose.Schema({
     default: Date.now
   },
   hora_salida: Date
+  // Recordar agregar parqueadero
 
 },
 { timestamps: true },

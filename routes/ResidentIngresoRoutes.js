@@ -26,6 +26,7 @@ router.post('/ingresoResident', async (req, res) => {
   }
 })
 
+// GET para los ingresos que etan filtrados por activo :true yq eu tenga parqueadero
 router.get('/ingresoResident', async (req, res) => {
   // Se enlistan los populate
   const populateVehicle = {
@@ -75,10 +76,85 @@ router.get('/ingresoResident', async (req, res) => {
     })
   }
 })
+
+// GET para los ingresos que solo estaran filtrados por
+// aquellos que tengan parqueadero
+router.get('/ingresoResidentNF', async (req, res) => {
+  // Se enlistan los populate
+  const populateVehicle = {
+    path: 'residente',
+    model: 'Residente',
+    populate: {
+      path: 'vehiculo',
+      match: { haveParq: true },
+      model: 'vehiculo',
+      populate: {
+        path: 'parqueadero',
+        model: 'parqueadero',
+        select: 'nombre_Parqueadero '
+      },
+      select: 'placa tipo datos_extra haveParq marca color'
+    }
+  }
+
+  const populateHogar = {
+    path: 'residente',
+    populate: {
+      path: 'hogar',
+      select: 'apto_num tower'
+    }
+  }
+
+  const populateHogarHabitando = {
+    path: 'residente',
+    select: 'nombre cedula telefono',
+    populate: {
+      path: 'hogar_habitando',
+      select: 'apto_num tower'
+    }
+  }
+  try {
+    const ingresosResidents = await IngresoResident.find({ })
+      // .populate(populateApto)
+      .populate(populateVehicle)
+      .populate(populateHogar)
+      .populate(populateHogarHabitando)
+
+    res.status(200).json(ingresosResidents)
+  } catch (error) {
+    return res.status(500).json({
+      mensaje: `Ocurrio un error al obtener los ingresos de los residentes', ${error}`,
+      error
+    })
+  }
+})
+
 // Este put se utilizara para implementarlo en cuanto en la vista se le de
 // terminar parqueadero o se confirme la tarifa correspondiente a la finalizacion
 // del ingreso de un "vehiculo Residente"
 router.put('/ingresoResident', async (req, res) => {
+  const {
+    id,
+    horaSalida
+  } = req.body
+  try {
+    const ResIngresoUpdated = await IngresoResident.findOneAndUpdate(
+      { _id: id },
+      { hora_salida: horaSalida, activo: true, ocupado: true },
+      { new: true }
+    )
+
+    res.status(200).json(ResIngresoUpdated)
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: `Ocurrio un error al terminar el parqueadero del residente', ${error}`,
+      error
+    })
+  }
+})
+
+// PAARA VACIAR INGRESO O PARQUEADERO
+router.put('/saldiaResident', async (req, res) => {
   const {
     id,
     horaSalida

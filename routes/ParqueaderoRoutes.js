@@ -86,7 +86,7 @@ router.post('/parqueadero', async (req, res) => {
   })
   try {
     const saveParqueadero = await newParqueadero.save()
-    res.status(201).json(saveParqueadero)
+    res.json(saveParqueadero)
   } catch (error) {
     return res.status(500).json({
       mensaje: `Ocurrio un error al crear un parqueadero', ${error}`,
