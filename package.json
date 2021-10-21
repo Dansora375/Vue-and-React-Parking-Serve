@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node app.js --exec",
     "dev": "nodemon app.js",
     "devbabel": "nodemon app.js --exec babel-node"
   },
@@ -18,7 +18,11 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "mongoose": "^6.0.5",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "@babel/cli": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "@babel/preset-env": "^7.15.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",

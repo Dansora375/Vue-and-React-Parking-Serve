@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
+import User from './models/user';
 // import bcrypt from 'bcrypt' // m
 
 const app = express()
@@ -22,6 +23,7 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(setUser)
 // app.use(Permission)
 
 app.use(express.urlencoded({ extended: true }))
@@ -40,6 +42,8 @@ app.use('/api/', require('./routes/ResidentIngresoRoutes'))
 app.use('/api/', require('./routes/vehiclesRoutes'))
 app.use('/api/authentication', require('./routes/authentication/login'))
 app.use('/api/buildings/towers', require('./routes/TowerRoutes'))
+// ruta para pruebas, no usar en producción
+app.use('/api/pruebas', require('./routes/rutasPrueba/pruebaLogin'))
 
 // app.use('/api', require('./routes/Info_parq_Routes'));
 
@@ -47,6 +51,16 @@ const history = require('connect-history-api-fallback')
 
 app.use(history())
 app.use(express.static(path.join(__dirname, 'public')))
+
+
+//
+function setUser (req, res, next) {
+  const userId = req.body.userId;
+  if (userId) {
+    req.user = User.findById(userId);
+  }
+  next();
+}
 
 // Puerto
 app.set('puerto', process.env.PORT || 3000)

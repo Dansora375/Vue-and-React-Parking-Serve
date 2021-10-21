@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import express from 'express'
+import express from 'express' 
 
 // eslint-disable-next-line camelcase
 import Entrada_vehiculo from '../models/principal_models/visitante'

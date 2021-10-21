@@ -64,35 +64,40 @@ router.post('/login', async (req, res) => {
 
     User.findOne(data, (error, userResult) => {
       // eliminando el password de los datos que puedan ser emitidos
-      const {
-        Cc,
-        name,
-        user,
-        email,
-        type
-      } = userResult
-      const usuarioData = {
-        Cc,
-        name,
-        user,
-        email,
-        type
+      try {
+        const {
+          Cc,
+          name,
+          user,
+          email,
+          type
+        } = userResult
+        const usuarioData = {
+          Cc,
+          name,
+          user,
+          email,
+          type
+        }
+        if (error) {
+          res.sendStatus(500).json(new dataLogin({}, false, error, false))
+        } else if (!userResult) {
+          res.send(new dataLogin({}, 'No se pudo loguear a la base', false))
+        } else {
+          userResult.isCorrectPassword(body.password, (error, result) => {
+            if (error) {
+              res.sendStatus(500).json(new dataLogin({}, false, error, false))
+            } else if (result) {
+              res.send(new dataLogin(usuarioData, {}, true))
+            } else {
+              res.send(new dataLogin({}, 'usuario o contraseña incorrecta', false))
+            }
+          })
+        }
+      } catch(error) {
+        res.sendStatus(500).json(new dataLogin({}, error, false));
       }
-      if (error) {
-        res.sendStatus(500).json(new dataLogin({}, false, error, false))
-      } else if (!userResult) {
-        res.send(new dataLogin({}, 'No se pudo loguear a la base', false))
-      } else {
-        userResult.isCorrectPassword(body.password, (error, result) => {
-          if (error) {
-            res.sendStatus(500).json(new dataLogin({}, false, error, false))
-          } else if (result) {
-            res.send(new dataLogin(usuarioData, {}, true))
-          } else {
-            res.send(new dataLogin({}, 'usuario o contraseña incorrecta', false))
-          }
-        })
-      }
+      
     })
     // console.log(data);
   } catch (error) {
