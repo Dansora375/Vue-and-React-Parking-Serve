@@ -49,6 +49,7 @@ router.put('/parqueaderoIngreso2', async (req, res) => {
   const {
     id,
     ocupado
+
     // Mirar si se podrai dejar con el id edl parq
   } = req.body
 
@@ -70,6 +71,52 @@ router.put('/parqueaderoIngreso2', async (req, res) => {
   }
 })
 
+// Esta se utilizara cuando se de en crear un ingreso o en
+// llenar parqueadero junto con la ruta para postear un ingreso de residente
+router.put('/parqueaderoIngresoResi', async (req, res) => {
+  const {
+    id,
+    horaEntrada
+  } = req.body
+  try {
+    const ResIngreso = await Parqueadero.findOneAndUpdate(
+      { _id: id },
+      { hora_entrada: horaEntrada, hora_salida: null, Ocupado: true },
+      { new: true }
+    )
+
+    res.status(200).json(ResIngreso)
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: `Ocurrio un error al llenar el parqueadero del residente', ${error}`,
+      error
+    })
+  }
+})
+
+// Esta se utilizara cuando se de en terminar un ingreso o en
+// vaciar parqueadero junto con la ruta para put del ingreso
+// de residente
+router.put('/parqueaderoSalidaResi', async (req, res) => {
+  const {
+    id,
+    horaSalida
+  } = req.body
+  try {
+    const ResSalida = await Parqueadero.findOneAndUpdate(
+      { _id: id },
+      { hora_salida: horaSalida, Ocupado: false },
+      { new: true }
+    )
+
+    res.status(200).json(ResSalida)
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: `Ocurrio un error al terminar el parqueadero del residente', ${error}`,
+      error
+    })
+  }
+})
 // Este post se realizara en primera instancia para crear parqueaderos sin relacion alguna con hogares
 router.post('/parqueadero', async (req, res) => {
   const {
@@ -205,6 +252,37 @@ router.get('/parqueadero', async (req, res) => {
         marca: 1,
         tipo: 1,
         datos_extra: 1
+      })
+
+    res.status(200).json(parqueaderos)
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: `Ocurrio un error al obtener un parqueadero', ${error}`,
+      error
+    })
+  }
+})
+
+// get para obtener parqueaderos para la vista ed parqueaderos
+router.get('/viewParqueadero', async (req, res) => {
+  const dataResident = {
+    path: 'vehiculo',
+    model: 'vehiculo',
+    select: 'placa marca color tipo datos_extra',
+    populate: {
+      path: 'ResidentOwner',
+      model: 'Residente',
+      select: 'nombre cedula telefono'
+    }
+
+  }
+
+  try {
+    const parqueaderos = await Parqueadero.find({ tipoPersonIngr: 'Residente' })
+      .populate(dataResident)
+      .populate('hogar', {
+        apto_num: 1,
+        tower: 1
       })
 
     res.status(200).json(parqueaderos)

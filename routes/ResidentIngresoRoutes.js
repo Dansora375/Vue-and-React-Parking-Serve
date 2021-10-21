@@ -5,13 +5,11 @@ const router = express.Router()
 
 router.post('/ingresoResident', async (req, res) => {
   const {
-    residentCC
+    id
   } = req.body
   try {
-    const traerResidente = await Residente.findOne({ cedula: residentCC })
-
     const newIngresoResident = new IngresoResident({
-      residente: traerResidente._id
+      residente: id
     // hora_entrada: new Date()
     })
 
@@ -62,7 +60,7 @@ router.get('/ingresoResident', async (req, res) => {
     }
   }
   try {
-    const ingresosResidents = await IngresoResident.find({ activo: true, ocupado: false })
+    const ingresosResidents = await IngresoResident.find({ activo: true })
       // .populate(populateApto)
       .populate(populateVehicle)
       .populate(populateHogar)
@@ -130,31 +128,32 @@ router.get('/ingresoResidentNF', async (req, res) => {
 })
 
 // Este put se utilizara para implementarlo en cuanto en la vista se le de
-// terminar parqueadero o se confirme la tarifa correspondiente a la finalizacion
+// llenar parqueadero
 // del ingreso de un "vehiculo Residente"
-router.put('/ingresoResident', async (req, res) => {
-  const {
-    id,
-    horaSalida
-  } = req.body
-  try {
-    const ResIngresoUpdated = await IngresoResident.findOneAndUpdate(
-      { _id: id },
-      { hora_salida: horaSalida, activo: true, ocupado: true },
-      { new: true }
-    )
 
-    res.status(200).json(ResIngresoUpdated)
-  } catch (error) {
-    return res.status(400).json({
-      mensaje: `Ocurrio un error al terminar el parqueadero del residente', ${error}`,
-      error
-    })
-  }
-})
+// router.put('/ingresoResident', async (req, res) => {
+//   const {
+//     id,
+//     horaSalida
+//   } = req.body
+//   try {
+//     const ResIngresoUpdated = await IngresoResident.findOneAndUpdate(
+//       { _id: id },
+//       { hora_salida: horaSalida, activo: true, ocupado: true },
+//       { new: true }
+//     )
+
+//     res.status(200).json(ResIngresoUpdated)
+//   } catch (error) {
+//     return res.status(400).json({
+//       mensaje: `Ocurrio un error al terminar el parqueadero del residente', ${error}`,
+//       error
+//     })
+//   }
+// })
 
 // PAARA VACIAR INGRESO O PARQUEADERO
-router.put('/saldiaResident', async (req, res) => {
+router.put('/salidaResident', async (req, res) => {
   const {
     id,
     horaSalida

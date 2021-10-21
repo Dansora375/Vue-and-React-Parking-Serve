@@ -56,7 +56,6 @@ const NewVisitorSche = new mongoose.Schema({
     required: [true, 'El dato del parqueadero es obligatorio al crear un nuevo ingreso']
   },
   hora_salida: Date
-  // Recordar agregar parqueadero
 
 },
 { timestamps: true },

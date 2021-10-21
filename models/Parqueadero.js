@@ -17,7 +17,9 @@ const ParqueaderoSche = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'Hogar'
   },
-  // Se enviara el dato del id del vehiculo con el concat desde el post de la ruta del vehiculo
+
+  // Se enviara el dato del id del vehiculo con el concat desde el post de la ruta del vehiculo, puede que un
+  // vehiculo no tenga un parqueadero
   // RECORDAR TRAER EL DATO DEL TIPO DE VEHICULO con el poPULATE
   vehiculo: {
     type: Schema.Types.ObjectId,
@@ -43,7 +45,10 @@ const ParqueaderoSche = new mongoose.Schema({
     enum: ['Residente', 'Visitante'],
     default: ['Residente', 'Visitante'].lastItem,
     required: [true, 'tipo de persona del parqueadero Obligatorio']
-  }
+  },
+  hora_entrada: Date,
+
+  hora_salida: Date
 
 },
 { timestamps: true },
