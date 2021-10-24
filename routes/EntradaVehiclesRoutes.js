@@ -7,13 +7,19 @@ import parqueadero from '../models/Parqueadero'
 const router = express.Router()
 
 router.get('/lista', async (req, res) => {
+  const populateParking = {
+    path: 'parqueadero',
+    select: 'nombre_Parqueadero'
+  }
   const finalizadas = req.query.fin === '1' || req.query.fin === 'true'
   try {
     let lista
     if (finalizadas) {
-      lista = await Entrada_vehiculo.find()
+      lista = await Entrada_vehiculo.find({})
+        .populate(populateParking)
     } else {
       lista = await Entrada_vehiculo.find({ activo: true })
+        .populate(populateParking)
     }
     res.json(lista)
   } catch (error) {
@@ -29,6 +35,15 @@ router.get('/lista', async (req, res) => {
 // Funcion para la entrada de un item nuevo
 router.post('', async (req, res) => {
   const body = req.body
+  // ejemplo de lo que se requiriria para agregar entrada de visitante
+  // "nombre": "Paquita",
+  //   "cedula":"512003057",
+  //   "placa": "JAS-1345",
+  //   "apto_num":"103",
+  //   "tower":"c",
+  //   "tipo": "Carro",
+  //   "datos_extra":"Limpiecito",
+  //   "parqueadero":"616700257e78425aa0aadc5d"
   try {
     // eslint-disable-next-line camelcase
     const entrada_nuevo = await Entrada_vehiculo.create(body)

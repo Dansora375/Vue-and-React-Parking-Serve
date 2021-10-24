@@ -264,7 +264,8 @@ router.get('/parqueadero', async (req, res) => {
 })
 
 // get para obtener parqueaderos para la vista ed parqueaderos
-router.get('/viewParqueadero', async (req, res) => {
+// que sean de tipo:Residente
+router.get('/viewParqueadero/Resident', async (req, res) => {
   const dataResident = {
     path: 'vehiculo',
     model: 'vehiculo',
@@ -294,6 +295,37 @@ router.get('/viewParqueadero', async (req, res) => {
   }
 })
 
+// get para obtener parqueaderos para la vista ed parqueaderos
+// que sean de tipo:Visitante
+router.get('/viewParqueadero/Visitant', async (req, res) => {
+  const dataResident = {
+    path: 'vehiculo',
+    model: 'vehiculo',
+    select: 'placa marca color tipo datos_extra',
+    populate: {
+      path: 'ResidentOwner',
+      model: 'Residente',
+      select: 'nombre cedula telefono'
+    }
+
+  }
+
+  try {
+    const parqueaderos = await Parqueadero.find({ tipoPersonIngr: 'Visitante' })
+      .populate(dataResident)
+      .populate('hogar', {
+        apto_num: 1,
+        tower: 1
+      })
+
+    res.status(200).json(parqueaderos)
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: `Ocurrio un error al obtener un parqueadero', ${error}`,
+      error
+    })
+  }
+})
 module.exports = router
 
 // Este get se usara en el caso de que el parqueadero no tenga relacion con algun hogar

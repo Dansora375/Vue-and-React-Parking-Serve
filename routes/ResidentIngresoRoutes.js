@@ -11,6 +11,9 @@ router.post('/ingresoResident', async (req, res) => {
     const newIngresoResident = new IngresoResident({
       residente: id
     // hora_entrada: new Date()
+    // acordarse de eimplmentar en el put la creacion de un
+    // nuevo docuemnto determinando y en un post la edicion
+    // determinada
     })
 
     const saveIngresoR = await newIngresoResident.save()
