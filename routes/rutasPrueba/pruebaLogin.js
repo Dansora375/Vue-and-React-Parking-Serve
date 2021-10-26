@@ -4,7 +4,8 @@ import { ROLES } from '../../middleWares/auth/Roles';
 
 const router = express.Router();
 
-router.get('/', setUser, authRole(ROLES.GUARDA), (req, res) => {
+router.get('/', setUser, authRole(ROLES.SUPERVISOR), (req, res) => {
+  
   res.send(req.userData);
 });
 

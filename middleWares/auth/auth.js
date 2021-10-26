@@ -43,7 +43,7 @@ async function setUser(req, res, next) {
       res.send({ data: 'Hacen falta datos', completed: false })
     }
   } catch (error) {
-    console.log(`${error}`);
+    // console.log(`${error}`);
     res.status(500);
     res.send({ data: error, completed: false });
   }

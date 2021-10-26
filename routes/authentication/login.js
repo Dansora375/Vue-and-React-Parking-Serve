@@ -61,7 +61,7 @@ router.post('/login', async (req, res) => {
       })
       // return;
     }
-
+    User.fin
     User.findOne(data, (error, userResult) => {
       // eliminando el password de los datos que puedan ser emitidos
       try {
