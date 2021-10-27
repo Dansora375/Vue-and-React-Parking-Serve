@@ -31,10 +31,6 @@ const HogaresSchema = new mongoose.Schema({
   parqueadero: {
     type: Schema.Types.ObjectId,
     ref: 'parqueadero'
-  },
-  edad: {
-    type: Number,
-    default: 0,
   }
 
 },
