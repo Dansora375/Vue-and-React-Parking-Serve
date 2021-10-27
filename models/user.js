@@ -100,7 +100,7 @@ userSchema.methods.isCorrectPassword = function (password, callback) {
       callback(err)
     } else {
       callback(err, same)
-      return same
+      // return same
     }
   })
 }

@@ -8,7 +8,7 @@ const router = express.Router()
 
 // REALIZAR CAMBIOS EN ESTA PARTE DE ACUERDO A LOS CAMBIOS EN HOGRES DE
 // CRISTIAN R
-router.put('/parqueaderoHogares', async (req, res) => {
+router.put('/parqueaderoHogares',  async (req, res) => {
   const {
     nombreParqueadero,
     aptoNum,

@@ -17,7 +17,7 @@ router.post('/hogares', async (req, res) => {
   } = req.body
   let newHogar
   let homeOwner
-  try {
+  try { 
     // Consultando los permisos del usuario en cuestion
     await User.getPermission2(user, password, async (error, result) => {
       if (error) {
