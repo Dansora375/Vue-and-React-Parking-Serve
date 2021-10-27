@@ -15,10 +15,10 @@ const residenteSchema = new mongoose.Schema({
     required: [true, 'Nombre obligatorio']
   },
   cedula: {
-    type: Number,
+    type: String,
     required: [true, 'CC obligatorio']
   },
-  telefono: Number,
+  telefono: String,
 
   // Datos sobre residencia
   // Un residente puede tener varios hogares, no es lo optino

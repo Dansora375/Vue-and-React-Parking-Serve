@@ -13,16 +13,19 @@ const NewVisitorSche = new mongoose.Schema({
     required: [true, 'Nombre obligatorio']
   },
   cedula: {
-    type: Number,
+    type: String,
     required: [true, 'CC obligatorio']
   },
 
   // Datos sobre residencia a la que se dirige
   apto_num: {
-    type: Number,
+    type: String,
     required: [true, 'numero de apartamento obligatorio']
   },
-  tower: String,
+  tower: {
+    type: String,
+    required: [true, 'torre obligatoria']
+  },
 
   // Datos sobre su vehiculo
   placa: {

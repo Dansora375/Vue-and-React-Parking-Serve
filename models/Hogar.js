@@ -10,7 +10,7 @@ const opts = {
 const HogaresSchema = new mongoose.Schema({
   // como prueba para mostrarlos por consola se iniciara con los datos de visitantes
   apto_num: {
-    type: Number,
+    type: String,
     required: [true, 'numero de apartamento obligatorio']
   },
   tower: {
