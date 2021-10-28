@@ -1,38 +1,36 @@
-import { Schema, model } from "mongoose";
-
+import { Schema, model } from 'mongoose'
 
 const entryResidentSchema = new Schema({
-  name:{
+  name: {
     type: String,
-    required: true,
+    required: true
   },
   active: {
     type: Boolean,
-    default: true,
+    default: true
   },
   entryTime: {
     type: Date,
     default: Date.now()
   },
   exitTime: {
-    type: Date,
+    type: Date
   },
 
   home: {
     type: Schema.Types.ObjectId,
-    required: [true, 'Es necesario especificar de que casa es']
+    required: [true, 'Es necesario especificar de que apartamento es']
   },
 
   vehicle: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId
   },
-  
+
   neighborhood: {
     type: Schema.Types.ObjectId,
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
-  },
+  }
 })
 
-
-export default model('EntryResident', entryResidentSchema);
+export default model('EntryResident', entryResidentSchema)

@@ -1,13 +1,14 @@
-import { Schema, model } from "mongoose";
-import { VEHICLE_TYPES } from "../others/vehicleTypes";
+import { Schema, model } from 'mongoose'
+import { VEHICLE_TYPES } from '../others/vehicleTypes'
 
 const entryVisitantSchema = new Schema({
   name: {
-    type: String
+    type: String,
+    required: true
   },
   identification: {
     type: Number,
-    required: true,
+    required: true
   },
   tower: {
     type: String,
@@ -18,7 +19,7 @@ const entryVisitantSchema = new Schema({
     required: [true, 'es necesario especificar el hogar al que va']
   },
   plate: {
-    type: String, 
+    type: String,
     required: [true, 'Es necesario saber la placa del vehiculo']
   },
   vehicleType: {
@@ -35,20 +36,21 @@ const entryVisitantSchema = new Schema({
   exitTime: Date,
   active: {
     type: Boolean,
-    default: true,
+    default: true
   },
 
   // Zona de ids
   parking: {
     type: Schema.Types.ObjectId,
     ref: 'Parking',
-    required: [true, 'Debe proporcionar el parqueadero'],
+    required: [true, 'Debe proporcionar el parqueadero']
   },
-  
+
   neighborhood: {
     type: Schema.Types.ObjectId,
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
-  },  
+  }
 })
 
+export default model('EntryVisitant', entryVisitantSchema)

@@ -1,14 +1,14 @@
-import { Schema, model, Mongoose } from "mongoose"
+import { Schema, model, Mongoose } from 'mongoose'
 
 // Creacion del schema de Neighborhood, el cual, por el momento
 // manejara muy pocos datos
 const neighborhoodSchema = new Schema({
   nombre: {
     type: String,
-    required: true,
+    required: true
   },
   direccion: {
-    type: String,
+    type: String
   },
   password: {
     type: String,
@@ -19,4 +19,4 @@ const neighborhoodSchema = new Schema({
   // }
 })
 
-export default model('Neighborhood', neighborhoodSchema);
+export default model('Neighborhood', neighborhoodSchema)

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose'
 
 const homeSchema = new Schema({
   name: { // normalmente llamado numero de apartamento
@@ -25,7 +25,7 @@ const homeSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
-  },
+  }
 })
 
 export default model('Home', homeSchema)

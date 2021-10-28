@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose'
 
 const ownerSchema = new Schema({
   name: {
@@ -6,10 +6,10 @@ const ownerSchema = new Schema({
     required: true
   },
   identification: {
-    type: Number,
+    type: Number
   },
   telephone: {
-    type: Number,
+    type: Number
   },
 
   home: [{
@@ -21,7 +21,7 @@ const ownerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
-  },
+  }
 })
 
-export default model('Owner', ownerSchema);
+export default model('Owner', ownerSchema)

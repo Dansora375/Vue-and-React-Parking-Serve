@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import {ROLES_LEVEL, ROLES, LEVEL_FROM_NAME } from '../others/roles' 
+import { Schema, model } from 'mongoose'
+import { ROLES_LEVEL, ROLES, LEVEL_FROM_NAME } from '../others/roles'
 import bcrypt from 'bcrypt'
 
 const saltRounds = 10// Usada para mejorar la seguridad del encriptado de contraseñas
@@ -11,7 +11,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: [true, 'Contraseña es necesaria'],
+    required: [true, 'Contraseña es necesaria']
   },
   rol: {
     type: String,
@@ -19,29 +19,28 @@ const userSchema = new Schema({
   },
   isAllowed: { // referencia a que el usuario debera ser verificado antes de poder trabajar en la base
     type: Boolean,
-    default: true, // modificar para etapa de construccion
+    default: true // modificar para etapa de construccion
   },
 
   email: {
     type: String
   },
   identification: {
-    type: Number,
+    type: Number
   },
   name: {
-    type: String,
+    type: String
   },
 
   neighborhood: { // el dato de conjunto no es obligatorio para todos los casos dentro de la app
     type: Schema.Types.ObjectId,
-    ref: 'Neighborhood',
+    ref: 'Neighborhood'
     // required: [true, 'Debe seleccionar el neighborhood al que pertenece']
-  },
-  
+  }
 
 })
 
-userSchema.method('isCorrectPassword', function (password, calback) {
+userSchema.method('isCorrectPassword', function (password, callback) {
   bcrypt.compare(password, this.password, function (err, same) {
     if (err) {
       callback(err)
@@ -52,26 +51,24 @@ userSchema.method('isCorrectPassword', function (password, calback) {
   })
 })
 
-userSchema.pre('save', function(next) {
-  const data = this;
+userSchema.pre('save', function (next) {
+  const data = this
   try {
-    if(this.isNew || this.isModified('password')) { // solo cuando el dato es nuevo, o cuando la contraseña es modificada se encriptara la contraseña
+    if (this.isNew || this.isModified('password')) { // solo cuando el dato es nuevo, o cuando la contraseña es modificada se encriptara la contraseña
       bcrypt.hash(data.password, saltRounds, (error, hashedPassword) => {
         if (error) {
           next(error)
         } else {
           data.password = hashedPassword
-          next();
+          next()
         }
-      });
+      })
     } else {
-      next();
+      next()
     }
   } catch (error) {
-    next(error);
+    next(error)
   }
-  
 })
 
-
-export default model('User', userSchema);
+export default model('User', userSchema)
