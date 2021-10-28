@@ -41,7 +41,7 @@ const userSchema = new Schema({
 
 })
 
-userSchema.method('isCorrectPassword', function (password, calback) {
+userSchema.method('isCorrectPassworcallbackd', function (password, callback) {
   bcrypt.compare(password, this.password, function (err, same) {
     if (err) {
       callback(err)

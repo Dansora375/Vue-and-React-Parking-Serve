@@ -13,7 +13,7 @@ const entryVisitantSchema = new Schema({
     type: String,
     required: [true, 'es necesario especificar la torre a la que se dirige']
   },
-  aptoName: {
+  homeName: {
     type: String,
     required: [true, 'es necesario especificar el hogar al que va']
   },
@@ -52,3 +52,5 @@ const entryVisitantSchema = new Schema({
   },  
 })
 
+
+export default model('EntryVisitant', entryVisitantSchema);

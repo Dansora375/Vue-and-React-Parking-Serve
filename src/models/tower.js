@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { HOME_TYPES } from "../others/homeType";
 
 const towerSchema = new Schema ({
   name: {
@@ -8,6 +9,11 @@ const towerSchema = new Schema ({
   capacidad: {
     type: Number,
     default: 0,
+  },
+  homeType: {
+    type: String,
+    enum: HOME_TYPES,
+    default: HOME_TYPES.APARTMENT
   },
   neighborhood: {
     type: Schema.Types.ObjectId,
