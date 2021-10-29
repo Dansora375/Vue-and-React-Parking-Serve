@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { TsT } from './config/db'
 
 const homeSchema = new Schema({
   name: { // normalmente llamado numero de apartamento
@@ -26,6 +27,9 @@ const homeSchema = new Schema({
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
-})
+},
+{ timestamps: true },
+TsT
+)
 
 export default model('Home', homeSchema)

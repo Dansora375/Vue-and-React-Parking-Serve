@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import { TsT } from './config/db'
 
 const ownerSchema = new Schema({
   name: {
@@ -22,6 +23,8 @@ const ownerSchema = new Schema({
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
-})
+}, { timestamps: true },
+TsT
+)
 
 export default model('Owner', ownerSchema)

@@ -1,6 +1,7 @@
-import { Schema, model } from "mongoose";
-import { VEHICLE_TYPES } from "../others/vehicleTypes";
-import { PERSON_TYPE } from "../others/personType";
+import { Schema, model } from 'mongoose'
+import { VEHICLE_TYPES } from '../others/vehicleTypes'
+import { PERSON_TYPE } from '../others/personType'
+import { TsT } from './config/db'
 
 const parkingSchema = new Schema({
   name: {
@@ -17,11 +18,10 @@ const parkingSchema = new Schema({
   },
   isTaken: {
     type: Boolean,
-    default: false,
+    default: false
   },
   lastEntryTime: Date,
   lastExitTime: Date,
-
 
   /*
   ZONA DE IDS
@@ -32,16 +32,17 @@ const parkingSchema = new Schema({
   },
   vehicle: {
     type: Schema.Types.ObjectId,
-    ref: 'Vehicle',
+    ref: 'Vehicle'
   },
-    neighborhood: {
-      type: Schema.Types.ObjectId,
-      ref: 'Neighborhood',
-      required: [true, 'Debe seleccionar el neighborhood al que pertenece']
-    },
+  neighborhood: {
+    type: Schema.Types.ObjectId,
+    ref: 'Neighborhood',
+    required: [true, 'Debe seleccionar el neighborhood al que pertenece']
+  }
 
-});
+},
+{ timestamps: true },
+TsT
+)
 
-
-
-export default model('Parking', parkingSchema);
+export default model('Parking', parkingSchema)

@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { ROLES_LEVEL, ROLES, LEVEL_FROM_NAME } from '../others/roles'
 import bcrypt from 'bcrypt'
+import { TsT } from './config/db'
 
 const saltRounds = 10// Usada para mejorar la seguridad del encriptado de contraseñas
 
@@ -38,9 +39,12 @@ const userSchema = new Schema({
     // required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
 
-})
+},
+{ timestamps: true },
+TsT
+)
 
-userSchema.method('isCorrectPassword', function (password, callback) {
+userSchema.method('isCorrectPassworcallbackd', function (password, callback) {
   bcrypt.compare(password, this.password, function (err, same) {
     if (err) {
       callback(err)

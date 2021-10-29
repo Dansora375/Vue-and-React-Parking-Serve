@@ -1,4 +1,4 @@
-VEHICLE_TYPES = {
+const VEHICLE_TYPES = {
   MOTO: 'Motocicleta',
   CARRO: 'Carro',
   CICLA: 'Bicicleta',

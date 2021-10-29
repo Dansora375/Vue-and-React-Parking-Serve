@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { VEHICLE_TYPES } from '../others/vehicleTypes'
+import { TsT } from './config/db'
 
 const vehicleSchema = new Schema({
   plate: {
@@ -31,6 +32,9 @@ const vehicleSchema = new Schema({
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
-})
+},
+{ timestamps: true },
+TsT
+)
 
 export default model('Vehicle', vehicleSchema)

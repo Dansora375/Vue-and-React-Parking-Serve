@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { VEHICLE_TYPES } from '../others/vehicleTypes'
+import { TsT } from './config/db'
 
 const entryVisitantSchema = new Schema({
   name: {
@@ -14,7 +15,7 @@ const entryVisitantSchema = new Schema({
     type: String,
     required: [true, 'es necesario especificar la torre a la que se dirige']
   },
-  aptoName: {
+  homeName: {
     type: String,
     required: [true, 'es necesario especificar el hogar al que va']
   },
@@ -51,6 +52,9 @@ const entryVisitantSchema = new Schema({
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
-})
+},
+{ timestamps: true },
+TsT
+)
 
 export default model('EntryVisitant', entryVisitantSchema)

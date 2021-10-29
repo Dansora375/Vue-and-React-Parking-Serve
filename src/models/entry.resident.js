@@ -1,10 +1,7 @@
 import { Schema, model } from 'mongoose'
+import { TsT } from './config/db'
 
 const entryResidentSchema = new Schema({
-  name: {
-    type: String,
-    required: true
-  },
   active: {
     type: Boolean,
     default: true
@@ -16,21 +13,26 @@ const entryResidentSchema = new Schema({
   exitTime: {
     type: Date
   },
+  plate: {
+    type: String
+  },
+  vehicleType: {
+    type: String
+  },
 
   home: {
     type: Schema.Types.ObjectId,
-    required: [true, 'Es necesario especificar de que apartamento es']
+    required: [true, 'Es necesario especificar de que casa es']
   },
-
-  vehicle: {
-    type: Schema.Types.ObjectId
-  },
-
   neighborhood: {
     type: Schema.Types.ObjectId,
     ref: 'Neighborhood',
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
-})
+
+},
+{ timestamps: true },
+TsT
+)
 
 export default model('EntryResident', entryResidentSchema)

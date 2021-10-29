@@ -1,7 +1,7 @@
-PERSON_TYPE = {
+const PERSON_TYPE = {
   VISITANT: 'Visitant',
   RESIDENT: 'Resident',
-  OTHER:  'Others'
+  OTHER: 'Others'
 }
 
 module.exports = {
