@@ -1,43 +1,10 @@
-import Parqueadero from '../models/Parqueadero'
-import Hogar from '../models/Hogar'
-const expres = require('express')
+
+const express = require('express')
 const router = express.Router()
+const controller = require('../controllers/ParkingController')
+  // Se utilizara para asignar un parqueadero a un hogar
 
-//  se piensa utilizar para aditar y agregar los datos de el apto_num y tower, para gerenara la relacion con hogares
-
-// REALIZAR CAMBIOS EN ESTA PARTE DE ACUERDO A LOS CAMBIOS EN HOGRES DE
-// CRISTIAN R
-router.put('/parqueaderoHogares', async (req, res) => {
-  const {
-    nombreParqueadero,
-    aptoNum,
-    tower
-  } = req.body
-  // SSi se desea se podrai implentar de forma que lo que se reciba de la vista sea directamente el ID del hogar, y tambien con el ID edl parqueadero
-  try {
-    // EDITAR ESTA BUSQUEDA SEGUNLOS CAMBIOS EN HOGRES
-    const traerHogar = await Hogar.findOne({
-      apto_num: aptoNum, tower: tower
-    })
-    const traerParqueadero = await Parqueadero.findOne({
-      nombre_Parqueadero: nombreParqueadero
-    })
-    // const IdParq = traerParqueadero._id
-
-    const updatedParq = await Parqueadero.findOneAndUpdate({ _id: traerParqueadero._id }, { hogar: traerHogar._id, assigned: true }, { new: true })
-    // const saveUpdate = await updatedParq.save()
-    // console.log(updatedParq)
-    traerHogar.parqueadero = updatedParq._id
-    await traerHogar.save()
-
-    res.status(201).json(updatedParq)
-  } catch (error) {
-    return res.status(400).json({
-      mensaje: `Ocurrio un error al editar el parqueadero en vista hogares', ${error}`,
-      error
-    })
-  }
-})
+router.put('/ToHome', controller.AssignParkingToHome)
 
 //  se piensa utilizar para  para CAMBIAR LA PROPIEDAD  del dato Ocupado a true en la vista de
 // Ingreso cuando se seleccione un aprqueadero
@@ -72,26 +39,7 @@ router.put('/parqueaderoIngreso2', async (req, res) => {
 
 // Esta se utilizara cuando se de en crear un ingreso o en
 // llenar parqueadero junto con la ruta para postear un ingreso de residente
-router.put('/parqueaderoIngresoResi', async (req, res) => {
-  const {
-    id,
-    horaEntrada
-  } = req.body
-  try {
-    const ResIngreso = await Parqueadero.findOneAndUpdate(
-      { _id: id },
-      { hora_entrada: horaEntrada, hora_salida: null, Ocupado: true },
-      { new: true }
-    )
-
-    res.status(200).json(ResIngreso)
-  } catch (error) {
-    return res.status(400).json({
-      mensaje: `Ocurrio un error al llenar el parqueadero del residente', ${error}`,
-      error
-    })
-  }
-})
+router.put('/parqueaderoIngresoResi', controller.fillParking)
 
 // Esta se utilizara cuando se de en terminar un ingreso o en
 // vaciar parqueadero junto con la ruta para put del ingreso

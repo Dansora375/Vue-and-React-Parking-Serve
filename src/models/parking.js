@@ -20,6 +20,10 @@ const parkingSchema = new Schema({
     type: Boolean,
     default: false
   },
+  assigned: {
+    type: Boolean,
+    default: false
+  },
   lastEntryTime: Date,
   lastExitTime: Date,
 

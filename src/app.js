@@ -2,17 +2,26 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
-import { DATA_BASE, USER, PASSWORD } from './config/db'
-// import User from './models/user';
+import User from './models/user'
+import notFound from './middleware/notFound'
+import handleErros from './middleware/handleErros'
 // import bcrypt from 'bcrypt' //
 
-const app = express()
+// Requiriendo dotenv para ver si existe archivo env y leerlo
+require('dotenv').config()
 
+const app = express()
+// Routes
+const ParkingRoute = require('./routes/Parking')
 // Conectando con la base de datos
 const mongoose = require('mongoose')
 
-const uri = `mongodb+srv://${USER}:${PASSWORD}@vue-base.bv1sc.mongodb.net/vue-base?retryWrites=true&w=majority`
-const options = { useNewUrlParser: true, useUnifiedTopology: true }
+const uri = process.env.MONGO_DB_URI
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+  // useCreateIndex: true
+}
 
 // middlewares
 app.use(morgan('tiny'))
@@ -20,6 +29,11 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(setUser)
+
+app.use('/api/Parking', ParkingRoute)
+// middlewares para captura de errores
+app.use(notFound)
+app.use(handleErros)
 
 const history = require('connect-history-api-fallback')
 
@@ -36,7 +50,7 @@ function setUser (req, res, next) {
 }
 
 // Puerto
-app.set('puerto', process.env.PORT || 3000)
+app.set('puerto', process.env.PORT)
 
 // para iniciar el servidor, es importante que se encuentre disponible la conección a la base de datos
 const serverConnection = async () => {
@@ -55,3 +69,7 @@ const serverConnection = async () => {
 }
 
 serverConnection()
+// Buena practica probar que sucede xd
+process.on('uncaughtException', () => {
+  mongoose.connection.disconnect()
+})

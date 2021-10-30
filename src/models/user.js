@@ -76,3 +76,5 @@ userSchema.pre('save', function (next) {
 })
 
 export default model('User', userSchema)
+// const User =export default model('User', userSchema)
+// module.exports = User
