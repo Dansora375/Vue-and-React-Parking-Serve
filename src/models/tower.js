@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { HOME_TYPES } from '../others/homeType'
-import { TsT } from './config/db'
+// import { TsT } from './config/db'
 
 const towerSchema = new Schema({
   name: {
@@ -23,7 +23,7 @@ const towerSchema = new Schema({
   }
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('Tower', towerSchema)

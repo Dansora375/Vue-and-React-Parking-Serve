@@ -2,7 +2,9 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
-import { DATA_BASE, USER, PASSWORD } from './config/db'
+// import { RESIDENT } from './others/personType'
+import {  USER, PASSWORD } from './configuration/database'
+// import { DATA_BASE, USER, PASSWORD } from './config/db'
 // import User from './models/user';
 // import bcrypt from 'bcrypt' //
 
@@ -19,21 +21,27 @@ app.use(morgan('tiny'))
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(setUser)
+// app.use(setUser)
 
 const history = require('connect-history-api-fallback')
 
 app.use(history())
 app.use(express.static(path.join(__dirname, 'public')))
 
-//
-function setUser (req, res, next) {
-  const userId = req.body.userId
-  if (userId) {
-    req.user = User.findById(userId)
-  }
-  next()
-}
+// //
+// function setUser (req, res, next) {
+//   const userId = req.body.userId
+//   if (userId) {
+//     req.user = User.findById(userId)
+//   }
+//   next()
+// }
+
+
+// Rutas
+// authentication
+app.use('/api/authentication/', require('./routes/authentication/login.register' ))
+
 
 // Puerto
 app.set('puerto', process.env.PORT || 3000)
