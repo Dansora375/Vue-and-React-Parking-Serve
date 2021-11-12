@@ -7,12 +7,17 @@ import notFound from './middleware/notFound'
 import handleErros from './middleware/handleErros'
 // import bcrypt from 'bcrypt' //
 
-// Requiriendo dotenv para ver si existe archivo env y leerlo
+// Requiriendo dotenv para ver si existe archivo .env y leerlo
 require('dotenv').config()
 
 const app = express()
 // Routes
 const ParkingRoute = require('./routes/Parking')
+const HomeRoute = require('./routes/Home')
+const OwnerRoute = require('./routes/Owner')
+const NeighborhoodRoute = require('./routes/Neighborhood')
+const GroupRoute = require('./routes/Group')
+const VehicleRoute = require('./routes/Vehicle')
 // Conectando con la base de datos
 const mongoose = require('mongoose')
 
@@ -30,7 +35,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(setUser)
 
+app.use('/api/Neighborhood', NeighborhoodRoute)
 app.use('/api/Parking', ParkingRoute)
+app.use('/api/Home', HomeRoute)
+app.use('/api/Owner', OwnerRoute)
+app.use('/api/Group', GroupRoute)
+app.use('/api/Vehicle', VehicleRoute)
 // middlewares para captura de errores
 app.use(notFound)
 app.use(handleErros)

@@ -24,7 +24,8 @@ const vehicleSchema = new Schema({
 
   // Zona de ids
   parking: {
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'Parking'
   },
 
   neighborhood: {

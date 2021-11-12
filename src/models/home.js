@@ -10,17 +10,23 @@ const homeSchema = new Schema({
   /*
   Zona de ids
   */
+
+  //  se envia en id desde el post del owner
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'Owner'
   },
+  // El id se obtiene en el campo cuando se asigna el
+  // parqueadero a un hogar
   parking: {
     type: Schema.Types.ObjectId,
     ref: 'Parking'
   },
-  tower: {
+  // Cuando se crea un home se debe de seleccinar en el
+  // select a que torre pertenece
+  group: {
     type: Schema.Types.ObjectId,
-    ref: 'Tower'
+    ref: 'Groups'
   },
   neighborhood: {
     type: Schema.Types.ObjectId,

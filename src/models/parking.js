@@ -24,16 +24,22 @@ const parkingSchema = new Schema({
     type: Boolean,
     default: false
   },
+  idLastEntryResident: {
+    type: Schema.Types.ObjectId
+  },
   lastEntryTime: Date,
   lastExitTime: Date,
 
   /*
   ZONA DE IDS
   */
+  // Se envia en id desde la asignacion de un aprqueadero a un
+  // hogar
   home: {
     type: Schema.Types.ObjectId,
     ref: 'Home'
   },
+  // se envia en id desde el post del vehiculo
   vehicle: {
     type: Schema.Types.ObjectId,
     ref: 'Vehicle'

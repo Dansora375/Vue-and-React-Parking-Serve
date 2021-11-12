@@ -2,12 +2,14 @@ import { Schema, model } from 'mongoose'
 import { HOME_TYPES } from '../others/homeType'
 import { TsT } from './config/db'
 
-const towerSchema = new Schema({
+const groupSchema = new Schema({
+  // Los nombres seran nombres ed agrupaciones, COMO:
+  // TORRE A, TORRE B , etc o CASAS,
   name: {
     type: String,
     required: [true, 'El nombre de la torre es necesario']
   },
-  capacidad: {
+  capacity: {
     type: Number,
     default: 0
   },
@@ -26,4 +28,4 @@ const towerSchema = new Schema({
 TsT
 )
 
-export default model('Tower', towerSchema)
+export default model('Groups', groupSchema)

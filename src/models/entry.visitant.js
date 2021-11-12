@@ -11,9 +11,9 @@ const entryVisitantSchema = new Schema({
     type: Number,
     required: true
   },
-  tower: {
+  group: {
     type: String,
-    required: [true, 'es necesario especificar la torre a la que se dirige']
+    required: [true, 'es necesario especificar el grupo  al que se dirige, casa o torre']
   },
   homeName: {
     type: String,

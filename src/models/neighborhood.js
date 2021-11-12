@@ -4,11 +4,12 @@ import { TsT } from './config/db'
 // Creacion del schema de Neighborhood, el cual, por el momento
 // manejara muy pocos datos
 const neighborhoodSchema = new Schema({
-  nombre: {
+  name: {
     type: String,
     required: true
+    // recordar agregar el unique  al nombre
   },
-  direccion: {
+  address: {
     type: String
   },
   password: {
