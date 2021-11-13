@@ -5,5 +5,5 @@ const PASSWORD = '1234567890_Mintic'
 module.exports = {
   DATA_BASE,
   USER,
-  PASSWORD,
+  PASSWORD
 }

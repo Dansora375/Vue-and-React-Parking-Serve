@@ -20,7 +20,7 @@ const neighborhoodSchema = new Schema({
 
   // }
 },
-{ timestamps: true },
+{ timestamps: true }
 // TsT
 )
 

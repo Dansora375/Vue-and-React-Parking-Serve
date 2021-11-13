@@ -13,7 +13,7 @@ router.get('/Assign/Home/:IdNeighborhood', controller.ParkingAssigneedFalse)
 
 // Esta se utilizara cuando se CREE un ingreso o en
 // llenar parqueadero
-router.put('/Entry/Resident', controller.fillParkingResi)
+// router.put('/Entry/Resident', controller.fillParkingResi)
 
 // aquellos que tengan el dato "isTaken :false "
 // POR AHORA NO SE UTILIZA, POSIBLE IMPLEMENTACION FUTURA
@@ -46,7 +46,7 @@ router.get('/Visitant/:IdNeighborhood', controller.visitantsParkings)
 
 // get para obtener la info para modal mas inf
 // que sean de tipo:Residente
-router.get('/Resident/MoreInfo/:IdNeighborhood', controller.residentsParkingsMoreInfo)
+router.get('/Resident/MoreInfo/:IdNeighborhood', controller.residentsParkingsMoreInf)
 
 // get para obtener la info para los modal mas info
 // que sean de tipo:Visitante

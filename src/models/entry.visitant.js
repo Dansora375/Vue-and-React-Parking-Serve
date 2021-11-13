@@ -53,7 +53,7 @@ const entryVisitantSchema = new Schema({
     required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
 },
-{ timestamps: true },
+{ timestamps: true }
 // TsT
 )
 

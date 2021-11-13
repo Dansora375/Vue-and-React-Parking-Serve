@@ -18,3 +18,4 @@ router.put('/:IdVehicle', controller.vehiclesMoreInfo)
 
 // eliminar vehiculo
 router.delete('/:IdVehicle', controller.deleteVehicle)
+module.exports = router

@@ -1,9 +1,9 @@
 import Owner from '../models/owner'
-import Home from '../models/hogar'
+import Home from '../models/home'
 
 module.exports = {
 
-  OnwerWhitParking: async (req, res, next) => {
+  OwnerWhitParking: async (req, res, next) => {
     const data = []
     const IdNeighborhood = req.params.IdNeighborhood
     try {
@@ -69,7 +69,7 @@ module.exports = {
     }
   },
 
-  newOnwer: async (req, res, next) => {
+  newOwner: async (req, res, next) => {
     const IdNeighborhood = req.params.IdNeighborhood
     const {
       name,

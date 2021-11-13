@@ -31,7 +31,7 @@ const entryResidentSchema = new Schema({
   }
 
 },
-{ timestamps: true },
+{ timestamps: true }
 // TsT
 )
 

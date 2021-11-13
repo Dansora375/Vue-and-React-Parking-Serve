@@ -1,4 +1,4 @@
-import Home from '../models/hogar'
+import Home from '../models/home'
 
 import Owner from '../models/owner'
 

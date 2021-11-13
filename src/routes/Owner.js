@@ -28,6 +28,6 @@ router.delete('/:IdOwner', controller.deleteOwner)
 // ------------------------------------------
 // PARA OBTENER LA LISTA DE RESIDENTES PARA LA VISTA DE INGRESO DE VEHICULOS, en la que se busca filtrar por aquellos que tengan parqueadero.
 // Es una opcion a usar en vez del select con los hogares
-router.get('/Select/:IdNeighborhood', controller.OnwerWhitParking)
+router.get('/Select/:IdNeighborhood', controller.OwnerWhitParking)
 
 module.exports = router

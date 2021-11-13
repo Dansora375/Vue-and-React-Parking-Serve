@@ -3,8 +3,8 @@ import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
 // import User from './models/user'
-import notFound from './middleware/notFound'
-import handleErros from './middleware/handleErros'
+import notFound from './middleWares/notFound'
+import handleErros from './middleWares/handleErros'
 // import { RESIDENT } from './others/personType'
 import { USER, PASSWORD } from './configuration/database'
 // import { DATA_BASE, USER, PASSWORD } from './config/db'
@@ -45,6 +45,7 @@ app.use('/api/Home', HomeRoute)
 app.use('/api/Owner', OwnerRoute)
 app.use('/api/Group', GroupRoute)
 app.use('/api/Vehicle', VehicleRoute)
+
 // middlewares para captura de errores
 app.use(notFound)
 app.use(handleErros)

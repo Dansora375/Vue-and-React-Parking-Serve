@@ -7,3 +7,4 @@ router.post('/:IdNeighborhood', controller.newGroup)
 
 // para utilizar en el select de la vista de hogares
 router.get('/:IdNeighborhood', controller.GroupsToSelect)
+module.exports = router

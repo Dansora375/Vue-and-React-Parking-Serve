@@ -7,3 +7,4 @@ router.post('/', controller.newNeighborhood)
 router.get('/', controller.Neighborhoods)
 router.put('/', controller.updateNeighborhood)
 router.delete('/', controller.deleteNeighborhood)
+module.exports = router
