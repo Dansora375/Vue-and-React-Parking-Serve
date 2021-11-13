@@ -17,13 +17,14 @@ const ROLES_LEVEL = {
   },
   OTHERS: {
     name: 'Visitante',
-    level: 4
+    level: 20
   }
 }
 
 // creando objeto que solo tiene el dato del name
 const rolNames = () => {
   const names = {}
+  let rol;
   // console.log(Object.values(ROLES_LEVEL))
   for (rol in ROLES_LEVEL) {
     // console.log(ROLES_LEVEL[rol])

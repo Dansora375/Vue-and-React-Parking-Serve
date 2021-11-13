@@ -1,5 +1,5 @@
-import { Schema, model, Mongoose } from 'mongoose'
-import { TsT } from './config/db'
+import { Schema, model } from 'mongoose'
+// import { TsT } from './config/db'
 
 // Creacion del schema de Neighborhood, el cual, por el momento
 // manejara muy pocos datos
@@ -21,7 +21,7 @@ const neighborhoodSchema = new Schema({
   // }
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('Neighborhood', neighborhoodSchema)

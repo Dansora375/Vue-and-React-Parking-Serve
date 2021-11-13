@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { VEHICLE_TYPES } from '../others/vehicleTypes'
-import { TsT } from './config/db'
+// import { TsT } from './config/db'
 
 const entryVisitantSchema = new Schema({
   name: {
@@ -54,7 +54,7 @@ const entryVisitantSchema = new Schema({
   }
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('EntryVisitant', entryVisitantSchema)

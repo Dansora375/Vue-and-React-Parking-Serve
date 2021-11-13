@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 import { VEHICLE_TYPES } from '../others/vehicleTypes'
 import { PERSON_TYPE } from '../others/personType'
-import { TsT } from './config/db'
+// import { TsT } from './config/db'
 
 const parkingSchema = new Schema({
   name: {
@@ -52,7 +52,7 @@ const parkingSchema = new Schema({
 
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('Parking', parkingSchema)

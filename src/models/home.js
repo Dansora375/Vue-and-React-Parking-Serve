@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { TsT } from './config/db'
+// import { TsT } from './config/db'
 
 const homeSchema = new Schema({
   name: { // normalmente llamado numero de apartamento
@@ -35,7 +35,7 @@ const homeSchema = new Schema({
   }
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('Home', homeSchema)

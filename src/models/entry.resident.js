@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { TsT } from './config/db'
+// import { TsT } from './config/db'
 
 const entryResidentSchema = new Schema({
   active: {
@@ -32,7 +32,7 @@ const entryResidentSchema = new Schema({
 
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('EntryResident', entryResidentSchema)

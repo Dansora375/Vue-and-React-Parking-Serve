@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 import { HOME_TYPES } from '../others/homeType'
-import { TsT } from './config/db'
+// import { TsT } from './config/db'
 
 const groupSchema = new Schema({
   // Los nombres seran nombres ed agrupaciones, COMO:
@@ -25,7 +25,7 @@ const groupSchema = new Schema({
   }
 },
 { timestamps: true },
-TsT
+// TsT
 )
 
 export default model('Groups', groupSchema)
