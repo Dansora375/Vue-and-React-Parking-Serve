@@ -79,7 +79,8 @@ const serverConnection = async () => {
 }
 
 serverConnection()
-// Buena practica probar que sucede xd
+// Buena practica probar que sucede xd, cuando hay un
+// uncaughtException descaonectando el servidor
 process.on('uncaughtException', () => {
   mongoose.connection.disconnect()
 })
