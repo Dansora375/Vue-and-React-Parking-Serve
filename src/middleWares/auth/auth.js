@@ -28,6 +28,7 @@ async function setUser(req, res, next) {
                 })
                 //eliminando la contraseña del usuario para poder enviar los datos al cliente
                 user.password = undefined
+                user._id = undefined
                 // res.status(200)
                 // res.json({token, user, auth: true})
 
@@ -53,6 +54,13 @@ async function setUser(req, res, next) {
     res.send({ error: `${error}`})
   }
 } 
+
+
+
+// se podra consultar el usuario a partir del token
+async function setUserToken (req, res, next) {
+
+}
 
 
 module.exports = {

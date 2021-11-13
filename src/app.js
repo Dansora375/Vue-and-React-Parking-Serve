@@ -41,6 +41,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Rutas
 // authentication
 app.use('/api/authentication/', require('./routes/authentication/login.register' ))
+  
+
+app.post('/api', (req, res) =>{
+    res.send('hola mundo')  
+  })
 
 
 // Puerto
@@ -61,5 +66,6 @@ const serverConnection = async () => {
     console.error(`No se pudo encender el servidor : ${error}`)
   }
 }
+
 
 serverConnection()
