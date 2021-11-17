@@ -134,5 +134,30 @@ module.exports = {
     } catch (error) {
       return next(error)
     }
-  }
+  },
+
+  /**
+   * Cambios hechos por Cristian Ramirez
+   */
+   VehicleAndParking2: async (req, res, next) => {
+    const idHome = req.query.HomeId
+    // console.log("los requerimientos son: ", req)
+    const VehicleParking = {
+      path: 'parking',
+      populate: {
+        path: 'vehicle',
+        select: 'plate carBrand type color extra'
+      },
+      select: 'name'
+
+    }
+    
+    try {
+      const home = await Home.findById({ idHome }, 'parking')
+        .populate(VehicleParking)
+      req.home = home
+    } catch (error) {
+      return next(error)
+    }
+  },
 }
