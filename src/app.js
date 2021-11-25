@@ -42,6 +42,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/Neighborhood', NeighborhoodRoute)
 app.use('/api/Parking', ParkingRoute)
 app.use('/api/Home', HomeRoute)
+
 app.use('/api/Owner', OwnerRoute)
 app.use('/api/Group', GroupRoute)
 app.use('/api/Vehicle', VehicleRoute)
@@ -71,7 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 // Puerto
-app.set('puerto', process.env.PORT || 3000)
+app.set('puerto', 2000)
 
 // para iniciar el servidor, es importante que se encuentre disponible la conección a la base de datos
 const serverConnection = async () => {
@@ -92,6 +93,6 @@ const serverConnection = async () => {
 serverConnection()
 // Buena practica probar que sucede xd, cuando hay un
 // uncaughtException descaonectando el servidor
-process.on('uncaughtException', () => {
-  mongoose.connection.disconnect()
-})
+// process.on('uncaughtException', () => {
+//   mongoose.connection.disconnect()
+// })

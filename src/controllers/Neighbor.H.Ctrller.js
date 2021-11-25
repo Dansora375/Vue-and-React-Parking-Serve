@@ -18,13 +18,26 @@ module.exports = {
     }
   },
 
-  Neighborhoods: async (req, res, next) => {
+  Neighborhood: async (req, res, next) => {
     const {
       NeighborhoodId
     } = req.body
     try {
       const Neighborhoods = await Neighborhood.findById({ NeighborhoodId })
       res.status(200).json(Neighborhoods)
+    } catch (error) {
+      return next(error)
+    }
+  },
+  neighborhoods: async (req, res, next) => {
+    try {
+      await Neighborhood.find({}, (error, result) =>{
+        if(error) {
+          return next(error)
+        }else{
+          res.status(200).json(neighborhoods)
+        }
+      }).clone()
     } catch (error) {
       return next(error)
     }

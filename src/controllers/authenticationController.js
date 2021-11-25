@@ -1,7 +1,8 @@
 
 // funciones y librerias para crear el usuario y generar el token
 import { SECRET, DURATION_TOKEN } from "../configuration/config";
-import { setUser } from '../middleWares/auth/auth'
+// import { setUser } from '../middleWares/auth/auth'
+import User from "../models/user";
 
 import jwt from 'jsonwebtoken'
 
@@ -21,6 +22,7 @@ module.exports = {
     } = req.body
   
     try {
+      // validando que el usuario no exista
       await User.exists({ username }, async (error, result) => {
         if (error) {
           res.status(400)
@@ -41,10 +43,17 @@ module.exports = {
               neighborhood
             })
   
-            // validando que el usuario no exista
+            
   
             // console.log(user)
-            await user.save()
+            
+            await user.save((err) => {
+              if(err) {
+                next(err)
+              }
+            })
+            
+            
   
             // creando el token a partir del usuario
             const token = jwt.sign({ id: user._id }, SECRET, {

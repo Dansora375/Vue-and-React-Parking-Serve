@@ -16,7 +16,8 @@ const userSchema = new Schema({
   },
   rol: {
     type: String,
-    enum: ROLES
+    enum: ROLES,
+    default: ROLES.GUARDA
   },
   isAllowed: { // referencia a que el usuario debera ser verificado antes de poder trabajar en la base
     type: Boolean,
@@ -35,8 +36,8 @@ const userSchema = new Schema({
 
   neighborhood: { // el dato de conjunto no es obligatorio para todos los casos dentro de la app
     type: Schema.Types.ObjectId,
-    ref: 'Neighborhood'
-    // required: [true, 'Debe seleccionar el neighborhood al que pertenece']
+    ref: 'Neighborhood',
+    required: [true, 'Debe seleccionar el neighborhood al que pertenece']
   }
 
 },
