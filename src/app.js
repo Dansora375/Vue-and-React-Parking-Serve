@@ -46,8 +46,10 @@ app.use('/api/Owner', OwnerRoute)
 app.use('/api/Group', GroupRoute)
 app.use('/api/Vehicle', VehicleRoute)
 
+app.use('/api/authentication/', require('./routes/authentication/login.register'))
+app.use('/api/entries', require('./routes/Entry'))
 // middlewares para captura de errores
-app.use(notFound)
+// app.use(notFound)
 app.use(handleErros)
 
 const history = require('connect-history-api-fallback')
@@ -66,14 +68,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 // Rutas
 // authentication
-app.use('/api/authentication/', require('./routes/authentication/login.register'))
 
-app.post('/api', (req, res) => {
-  res.send('hola mundo')
-})
 
 // Puerto
-app.set('puerto', process.env.PORT)
+app.set('puerto', process.env.PORT || 3000)
 
 // para iniciar el servidor, es importante que se encuentre disponible la conección a la base de datos
 const serverConnection = async () => {
