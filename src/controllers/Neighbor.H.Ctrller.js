@@ -18,6 +18,20 @@ module.exports = {
     }
   },
 
+  neighborhoods: async (req, res, next) => {
+    try {
+      await Neighborhood.find({}, ' _id name address',(error, result) =>{
+        if(error) {
+          return next(error)
+        }else{
+          res.status(200).json(result)
+        }
+      }).clone()
+    } catch (error) {
+      return next(error)
+    }
+  },
+
   Neighborhood: async (req, res, next) => {
     const {
       NeighborhoodId
@@ -29,19 +43,7 @@ module.exports = {
       return next(error)
     }
   },
-  neighborhoods: async (req, res, next) => {
-    try {
-      await Neighborhood.find({}, (error, result) =>{
-        if(error) {
-          return next(error)
-        }else{
-          res.status(200).json(neighborhoods)
-        }
-      }).clone()
-    } catch (error) {
-      return next(error)
-    }
-  },
+
   updateNeighborhood: async (req, res, next) => {
     const {
       name,
@@ -56,6 +58,7 @@ module.exports = {
       return next(error)
     }
   },
+
   deleteNeighborhood: async (req, res, next) => {
     const {
       NeighborhoodId
