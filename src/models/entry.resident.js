@@ -22,6 +22,7 @@ const entryResidentSchema = new Schema({
 
   home: {
     type: Schema.Types.ObjectId,
+    ref: 'Home',
     required: [true, 'Es necesario especificar de que casa es']
   },
   neighborhood: {
