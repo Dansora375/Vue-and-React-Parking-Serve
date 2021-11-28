@@ -10,7 +10,6 @@ const PERSON_TYPE = {
   OTHER: 'Otros'
 }
 
-
 module.exports = {
   PERSON_TYPE
 }

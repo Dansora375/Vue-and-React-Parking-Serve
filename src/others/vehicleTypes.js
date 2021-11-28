@@ -1,5 +1,5 @@
 const VEHICLE_TYPES = {
-  MOTO: 'Motocicleta',
+  MOTO: 'Moto',
   CARRO: 'Carro',
   CICLA: 'Bicicleta',
   OTROS: 'Others'
