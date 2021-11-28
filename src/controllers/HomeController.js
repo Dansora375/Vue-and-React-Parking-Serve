@@ -143,7 +143,7 @@ module.exports = {
   VehicleAndParking2: async (req, res, next) => {
     const idHome = req.query.HomeId
     // console.log("los requerimientos son: ", req)
-    console.log(idHome)
+    // console.log(idHome)
     const VehicleParking = {
       path: 'parking',
       populate: {

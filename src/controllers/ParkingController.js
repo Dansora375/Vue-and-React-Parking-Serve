@@ -29,7 +29,16 @@ module.exports = {
   // llenar parqueadero se hara de forma individual
   // y no dentro de esta misma ruta
 
-  fillParkingResi: async (dataEntryResi, req, res, next) => {
+  // para usar este middleWare es necesario poner en el requirement los siguientes datos:
+  /**
+   * 
+   * idResident haciendo referencia al id que representa al residente
+   * entryTimeR: haciendo referencia a la hora a la que se creo la entrada
+   * idParking: haciendo referencia al id del parqueadero
+   * 
+   */
+
+  fillParkingResi: async (req, res, next) => {
     // Antes de ejecutar el llenado en parqueadero
     // se debe de crear un ingreso y ed ese ingreso
     // usar su id, como se muestra abajo
@@ -39,7 +48,8 @@ module.exports = {
     // esta ruta recibira  el IdParking y el entryTime por medio del next si todo sale bien
 
     // dataEntryResi sera un objeto con los siguientes datos
-    const EntryResidentId = dataEntryResi._id
+
+    const EntryResidentId = req.idResident
     const EntryResidentTime = dataEntryResi.entryTime
     const IdParking = dataEntryResi.IdParking
     // const {
@@ -58,8 +68,8 @@ module.exports = {
         { lastEntryTime: EntryResidentTime, lastExitTime: null, idLastEntryResident: EntryResidentId, isTaken: true },
         { new: true }
       )
-
-      res.status(200).json(ParkingFill)
+      req.wasFilled = true
+      // res.status(200).json(ParkingFill)
     } catch (error) {
       return next(error)
     }
@@ -75,7 +85,7 @@ module.exports = {
       exitTime
     } = req.body
     try {
-      // Actualizando el estado de la entrada del residente
+      // Actualizando el estado de la entrada del     
       await EntryResident.findByIdAndUpdate({ _id: IdEntryResident }, { active: false, exitTime: exitTime }, { new: true })
 
       // Actualizando el estado del entradparqueadero del residente
