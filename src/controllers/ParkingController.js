@@ -91,16 +91,17 @@ module.exports = {
   },
 
   newParking: async (req, res, next) => {
+    const idNeighborhood = req.params.IdNeighborhood
+
     const {
-      ParkingName,
+      parkingName,
       vehicleType,
-      personType,
-      idNeighborhood
+      personType
     } = req.body
 
     try {
       const newParking = new Parking({
-        name: ParkingName,
+        name: parkingName,
         vehicleType,
         personType,
         neighborhood: idNeighborhood

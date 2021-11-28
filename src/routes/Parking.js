@@ -30,7 +30,7 @@ router.get('/Entry/Visitant/:IdNeighborhood', controller.ParkingIsTakenVisitant)
 router.put('/Exit/Residen/:IdParking', controller.emptyParkingResi)
 
 // Este post se realizara en primera instancia para crear parqueaderos sin relacion alguna
-router.post('/', controller.newParking)
+router.post('/:IdNeighborhood', controller.newParking)
 
 // get para obtener parqueaderos sin ningun tipo de filtro,
 // claramente tiene el filtro del neighborhood correspondiente

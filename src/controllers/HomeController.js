@@ -1,6 +1,7 @@
 import Home from '../models/home'
 
 import Owner from '../models/owner'
+const { ObjectId } = require('mongodb')
 
 module.exports = {
 
@@ -139,9 +140,10 @@ module.exports = {
   /**
    * Cambios hechos por Cristian Ramirez
    */
-   VehicleAndParking2: async (req, res, next) => {
+  VehicleAndParking2: async (req, res, next) => {
     const idHome = req.query.HomeId
     // console.log("los requerimientos son: ", req)
+    console.log(idHome)
     const VehicleParking = {
       path: 'parking',
       populate: {
@@ -151,13 +153,15 @@ module.exports = {
       select: 'name'
 
     }
-    
+    // const xd = ObjectId(idHome)
+
     try {
-      const home = await Home.findById({ idHome }, 'parking')
+      const home = await Home.findById({ _id: ObjectId(idHome) }, 'parking')
         .populate(VehicleParking)
       req.home = home
+      return next()
     } catch (error) {
       return next(error)
     }
-  },
+  }
 }
