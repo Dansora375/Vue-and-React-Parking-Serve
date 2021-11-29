@@ -58,5 +58,20 @@ router.get('/list-entry-visitant/:IdNeighborhood', entryController.listEntryVisi
     taskComplete: true
   })
 })
+router.get('/more-info-entry-resident/:idEntryResi', entryController.MoreInfoEntryResident, (req, res) => {
+  res.status(200)
+  res.send({
+    data: req.entryResi,
+    taskComplete: true
+  })
+})
+
+router.get('/more-info-entry-visitant/:idEntryVisi', entryController.MoreInfoVisitants, (req, res) => {
+  res.status(200)
+  res.send({
+    data: req.entryVisi,
+    taskComplete: true
+  })
+})
 
 module.exports = router

@@ -101,7 +101,7 @@ module.exports = {
   },
 
   listEntryResident: async (req, res, next) => {
-    console.log(req.params)
+    // console.log(req.params)
     const neighborhood = req.params.IdNeighborhood
 
     // validando que se halla entregado el id
@@ -122,8 +122,9 @@ module.exports = {
       next(error)
     }
   },
+
   listEntryVisitants: async (req, res, next) => {
-    console.log(req.params)
+    // console.log(req.params)
     const neighborhood = req.params.IdNeighborhood
 
     // validando que se halla entregado el id
@@ -136,6 +137,48 @@ module.exports = {
       await entryV.find({ neighborhood, active: true }, (error, result) => {
         if (error) { next(error) }
         req.listEntryV = result
+        next()
+      }).clone()
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  MoreInfoEntryResident: async (req, res, next) => {
+    // console.log(req.params)
+    const idEntryResi = req.params.idEntryResi
+
+    // validando que se halla entregado el id
+    if (!idEntryResi) {
+      res.status(403)
+      return res.send({ messsage: 'No se pudo completar la peticion ya que no se proporciono el id de la entrada' })
+
+      // next(error)
+    }
+
+    try {
+      await entryR.findById({ _id: idEntryResi }, (error, result) => {
+        if (error) { next(error) }
+        req.entryResi = result
+        next()
+      }).clone()
+    } catch (error) {
+      next(error)
+    }
+  },
+  MoreInfoVisitants: async (req, res, next) => {
+    // console.log(req.params)
+    const idEntryVisi = req.params.idEntryVisi
+    // validando que se halla entregado el id
+    if (!idEntryVisi) {
+      res.status(403)
+      return res.send({ messsage: 'No se pudo completar la peticion ya que no se proporciono el id del conjunto' })
+    }
+
+    try {
+      await entryV.find({ _id: idEntryVisi }, (error, result) => {
+        if (error) { next(error) }
+        req.entryVisi = result
         next()
       }).clone()
     } catch (error) {
