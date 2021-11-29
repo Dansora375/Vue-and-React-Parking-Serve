@@ -5,14 +5,13 @@ import entryController from '../controllers/entryController'
 // 'VehicleAndParking2' trae los datos del parqueadero y del vehiculo dado el id de una casa
 import { VehicleAndParking2 } from '../controllers/HomeController'
 // 'fillParkingResi' se encarga de llenar el parqueadero dado un id
-import { fillParkingResi } from '../controllers/ParkingController' 
+import { fillParkingResi } from '../controllers/ParkingController'
 
 const router = express.Router()
 
-
 /** para postear una nueva entrada de residente se necesitan los siguientes datos:
  * params: IdNeighborhood, HomeId
- * body: entryTime
+ * body: entryTime (opcional ya que en el moedlo esta por default)
 **/
 router.post('/new-entry-resident/:IdNeighborhood/:HomeId', VehicleAndParking2, entryController.newEntryResident, fillParkingResi, (req, res) => {
   // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio
@@ -28,7 +27,7 @@ router.post('/new-entry-resident/:IdNeighborhood/:HomeId', VehicleAndParking2, e
 })
 
 /**
- * 
+ *
  */
 router.post('/new-entry-visitant/:IdNeighborhood/:ParkingId', VehicleAndParking2, entryController.newEntryVisitant, (req, res) => {
   // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio

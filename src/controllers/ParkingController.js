@@ -11,15 +11,13 @@ module.exports = {
 
     } = req.body
     try {
-      const BringHome = await Home.findById({
-        IdHome
-      })
-      const updateParking = await Parking.findOneAndUpdate({ _id: IdParking }, { home: IdHome, assigned: true }, { new: true })
+      const BringHome = await Home.findById({ _id: IdHome })
+      await Parking.findOneAndUpdate({ _id: IdParking }, { home: IdHome, assigned: true }, { new: true })
 
-      BringHome.parking = updateParking._id
+      BringHome.parking = IdParking
       await BringHome.save()
 
-      res.status(201)
+      res.status(201).send('Actualizacion con exito')
     } catch (error) {
       return next(error)
     }
@@ -31,11 +29,11 @@ module.exports = {
 
   // para usar este middleWare es necesario poner en el requirement los siguientes datos:
   /**
-   * 
+   *
    * idResident haciendo referencia al id que representa al residente
    * entryTimeR: haciendo referencia a la hora a la que se creo la entrada
    * idParking: haciendo referencia al id del parqueadero
-   * 
+   *
    */
 
   fillParkingResi: async (req, res, next) => {
@@ -45,13 +43,11 @@ module.exports = {
 
     // En la ruta de crear entrada de resientes se le pasara
     // por body el IdParking y el entryTime, IdHome se le puede pasar por params,
-    // esta ruta recibira  el IdParking y el entryTime por medio del next si todo sale bien
-
-    // dataEntryResi sera un objeto con los siguientes datos
+    // esta ruta recibira  el IdParking y el entryTime
 
     const EntryResidentId = req.idResident
-    const EntryResidentTime = dataEntryResi.entryTime
-    const IdParking = dataEntryResi.IdParking
+    const EntryResidentTime = req.entryTimeR
+    const IdParking = req.idParking
     // const {
     //   IdParking,
     //   entryTime,
@@ -63,12 +59,13 @@ module.exports = {
       // })
       // await newEntryResident.save()
 
-      const ParkingFill = await Parking.findByIdAndUpdate(
-        { IdParking },
+      await Parking.findByIdAndUpdate(
+        { _id: IdParking },
         { lastEntryTime: EntryResidentTime, lastExitTime: null, idLastEntryResident: EntryResidentId, isTaken: true },
-        { new: true }
-      )
+        { new: true })
+
       req.wasFilled = true
+      return next()
       // res.status(200).json(ParkingFill)
     } catch (error) {
       return next(error)
@@ -85,7 +82,7 @@ module.exports = {
       exitTime
     } = req.body
     try {
-      // Actualizando el estado de la entrada del     
+      // Actualizando el estado de la entrada del
       await EntryResident.findByIdAndUpdate({ _id: IdEntryResident }, { active: false, exitTime: exitTime }, { new: true })
 
       // Actualizando el estado del entradparqueadero del residente
@@ -183,48 +180,8 @@ module.exports = {
     }
   },
 
-  residentsParkingsMoreInf: async (req, res, next) => {
-    const IdNeighborhood = req.params.IdNeighborhood
-
-    const dataResident = {
-      path: 'home',
-      model: 'Home',
-      populate: {
-        path: 'owner',
-        model: 'Owner',
-        select: 'name identification telephone '
-      },
-      select: 'name'
-    }
-
-    const dataGroup = {
-      path: 'home',
-      populate: {
-        path: 'group',
-        select: 'name homeType '
-      }
-    }
-
-    const dataVehicle = {
-      path: 'vehicle',
-      model: 'Vehicle',
-      select: 'plate carBrand color type extra'
-    }
-
-    try {
-      const parkings = await Parking.find({ personType: 'Residente', neighborhood: IdNeighborhood })
-        .populate(dataResident)
-        .populate(dataGroup)
-        .populate(dataVehicle)
-
-      res.status(200).json(parkings)
-    } catch (error) {
-      return next(error)
-    }
-  },
-
-  visitantsParkingsMoreInf: async (req, res, next) => {
-    const IdNeighborhood = req.params.IdNeighborhood
+  ParkingMoreInf: async (req, res, next) => {
+    const IdParking = req.params.IdParking
 
     const dataResident = {
 
@@ -254,12 +211,12 @@ module.exports = {
     }
 
     try {
-      const parkings = await Parking.find({ personType: 'Visitante', neighborhood: IdNeighborhood })
+      const parking = await Parking.findById({ _id: IdParking })
         .populate(dataResident)
         .populate(dataGroup)
         .populate(dataVehicle)
 
-      res.status(200).json(parkings)
+      res.status(200).json(parking)
     } catch (error) {
       return next(error)
     }

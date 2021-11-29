@@ -1,4 +1,5 @@
 import Vehicle from '../models/vehicle'
+import Parking from '../models/parking'
 
 module.exports = {
 
@@ -24,6 +25,10 @@ module.exports = {
         neighborhood: IdNeighborhood
       })
       const savedVehicle = await newVehicle.save()
+
+      const bringParking = await Parking.findById({ _id: parking })
+      bringParking.vehicle = savedVehicle._id
+      await bringParking.save()
 
       res.status(200).json(savedVehicle)
     } catch (error) {
@@ -60,7 +65,7 @@ module.exports = {
     }
 
     try {
-      const vehicles = await Vehicle.findById({ IdVehicle })
+      const vehicles = await Vehicle.findById({ _id: IdVehicle })
         .populate(populateOwner)
 
       res.status(200).json(vehicles)
@@ -79,7 +84,7 @@ module.exports = {
       extra
     } = req.body
     try {
-      const updateVehicle = await Vehicle.findByIdAndUpdate({ IdVehicle },
+      const updateVehicle = await Vehicle.findByIdAndUpdate({ _id: IdVehicle },
         {
           plate,
           carBrand,

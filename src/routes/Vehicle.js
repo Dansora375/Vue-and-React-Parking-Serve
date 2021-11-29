@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const controller = require('../controllers/VehicleController')
 
-// Nuevo residente
+// Nuevo vehiculo
 router.post('/:IdNeighborhood', controller.newVehicle)
 
 // Obtener todos lo vehiculos para la vista

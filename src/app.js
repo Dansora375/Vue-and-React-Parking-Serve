@@ -3,10 +3,11 @@ import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
 // import User from './models/user'
-import notFound from './middleWares/notFound'
+
+// import notFound from './middleWares/notFound'
 import handleErros from './middleWares/handleErros'
 // import { RESIDENT } from './others/personType'
-import { USER, PASSWORD } from './configuration/database'
+
 // import { DATA_BASE, USER, PASSWORD } from './config/db'
 // import User from './models/user';
 // import bcrypt from 'bcrypt' //
@@ -70,9 +71,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Rutas
 // authentication
 
-
 // Puerto
-app.set('puerto', 2000)
+app.set('puerto', 3000)
 
 // para iniciar el servidor, es importante que se encuentre disponible la conección a la base de datos
 const serverConnection = async () => {

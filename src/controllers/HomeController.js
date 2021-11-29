@@ -1,7 +1,6 @@
 import Home from '../models/home'
 
 import Owner from '../models/owner'
-const { ObjectId } = require('mongodb')
 
 module.exports = {
 
@@ -49,7 +48,7 @@ module.exports = {
       select: 'name telephone'
     }
     try {
-      const home = await Home.findById({ idHome }, 'name group owner')
+      const home = await Home.findById({ _id: idHome }, 'name group owner')
         .populate(populateGroup)
         .populate(populateOwner)
       res.status(200).json(home)
@@ -70,7 +69,7 @@ module.exports = {
 
     }
     try {
-      const home = await Home.findById({ idHome }, 'parking')
+      const home = await Home.findById({ _id: idHome }, 'parking')
         .populate(VehicleParking)
       res.status(200).json(home)
     } catch (error) {
@@ -88,7 +87,7 @@ module.exports = {
     } = req.body
     try {
       await Owner.findByIdAndUpdate(
-        { OwnerId },
+        {_id: OwnerId },
         { name, identification, telephone }, { new: true }
       )
       res.status(200)
@@ -141,7 +140,7 @@ module.exports = {
    * Cambios hechos por Cristian Ramirez
    */
   VehicleAndParking2: async (req, res, next) => {
-    const idHome = req.query.HomeId
+    const idHome = req.params.HomeId
     // console.log("los requerimientos son: ", req)
     // console.log(idHome)
     const VehicleParking = {
@@ -156,7 +155,7 @@ module.exports = {
     // const xd = ObjectId(idHome)
 
     try {
-      const home = await Home.findById({ _id: ObjectId(idHome) }, 'parking')
+      const home = await Home.findById({ _id: idHome }, 'parking')
         .populate(VehicleParking)
       req.home = home
       return next()

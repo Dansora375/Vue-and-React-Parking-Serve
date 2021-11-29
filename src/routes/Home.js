@@ -35,6 +35,4 @@ router.get('/Select/Entry/Resident/:IdNeighborhood', controller.homeWithParking)
 // un owner
 router.get('/Select/New/Owner/:IdNeighborhood', controller.homeWithGroup)
 
-// FALTA ESTABLECER LA FORMA COMO SE HARA LA ASIGNACION DE PARUQEADERO Y HOGAR , para asi realizar la ruta
-
 module.exports = router

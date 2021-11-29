@@ -41,8 +41,8 @@ module.exports = {
           req.entryTimeR = entryResident.entryTime
           req.idParking = home.parking._id
           req.result = result
+          return next()
           // res.json(result)
-          
         } else {
           req.notResultMessage = 'It couldnt be completed the task, please try again or contact to support'
         }
@@ -60,7 +60,7 @@ module.exports = {
       homeName,
       plate,
       vehicleType,
-      personToVisit,
+      personToVisit
     } = req.body
 
     const neighborhood = req.params.IdNeighborhood
@@ -79,16 +79,13 @@ module.exports = {
         parking
       })
       await entryVisitant.save((error) => {
-        if(error)
-          next(error)
-        else if (result) {
+        if (error) { next(error) } else if (result) {
           // cargando algunos resultados para posterior uso en otros middlewares
           req.idResident = entryResident._id
           req.entryTimeR = entryResident.entryTime
           req.idParking = home.parking._id
           req.result = result
           // res.json(result)
-          
         } else {
           req.notResultMessage = 'It couldnt be completed the task, please try again or contact to support'
         }
@@ -103,17 +100,16 @@ module.exports = {
     const neighborhood = req.params.IdNeighborhood
 
     // validando que se halla entregado el id
-    if(!neighborhood){
+    if (!neighborhood) {
       res.status(403)
-      return res.send({ messsage: 'No se pudo completar la peticion ya que no se proporciono el id del conjunto'})
+      return res.send({ messsage: 'No se pudo completar la peticion ya que no se proporciono el id del conjunto' })
 
       // next(error)
     }
 
     try {
-      await entryR.find({neighborhood, active: true}, (error, result) => {
-        if(error)
-          next(error)
+      await entryR.find({ neighborhood, active: true }, (error, result) => {
+        if (error) { next(error) }
         req.listEntryR = result
         next()
       }).clone()
@@ -126,15 +122,14 @@ module.exports = {
     const neighborhood = req.params.IdNeighborhood
 
     // validando que se halla entregado el id
-    if(!neighborhood){
+    if (!neighborhood) {
       res.status(403)
-      return res.send({ messsage: 'No se pudo completar la peticion ya que no se proporciono el id del conjunto'})
+      return res.send({ messsage: 'No se pudo completar la peticion ya que no se proporciono el id del conjunto' })
     }
 
     try {
-      await entryV.find({neighborhood, active: true}, (error, result) => {
-        if(error)
-          next(error)
+      await entryV.find({ neighborhood, active: true }, (error, result) => {
+        if (error) { next(error) }
         req.listEntryV = result
         next()
       }).clone()

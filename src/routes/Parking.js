@@ -44,13 +44,9 @@ router.get('/Resident/:IdNeighborhood', controller.residentsParkings)
 // que sean de tipo:Visitante
 router.get('/Visitant/:IdNeighborhood', controller.visitantsParkings)
 
-// get para obtener la info para modal mas inf
-// que sean de tipo:Residente
-router.get('/Resident/MoreInfo/:IdNeighborhood', controller.residentsParkingsMoreInf)
-
 // get para obtener la info para los modal mas info
 // que sean de tipo:Visitante
-router.get('/Visitant/MoreInfo/:IdNeighborhood', controller.visitantsParkingsMoreInf)
+router.get('/MoreInfo/:IdParking', controller.ParkingMoreInf)
 
 // get para el select de la vista de vehiculos
 // se mostraran parqueaderos sin vehiculo

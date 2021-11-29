@@ -1,5 +1,6 @@
 import Owner from '../models/owner'
 import Home from '../models/home'
+const { ObjectId } = require('mongodb')
 
 module.exports = {
 
@@ -58,7 +59,7 @@ module.exports = {
     try {
       // no es necesario pasarle el neigborhood ya que
       // anteriormente en el get de owner ya se filtra
-      const owner = await Owner.findById({ IdOwner }, 'name identification telephone home')
+      const owner = await Owner.findById({ _id: IdOwner }, 'name identification telephone home')
         .populate(VehicleParking)
         .populate(groupHome)
 
@@ -71,12 +72,12 @@ module.exports = {
 
   newOwner: async (req, res, next) => {
     const IdNeighborhood = req.params.IdNeighborhood
+
     const {
       name,
       identification,
       telephone,
       homeId
-
     } = req.body
 
     try {
@@ -85,11 +86,13 @@ module.exports = {
         identification,
         telephone,
         neighborhood: IdNeighborhood
+        // home: homeId
       })
       newOwner.home = newOwner.home.concat(homeId)
+
       const savedOwner = await newOwner.save()
 
-      const bringHome = await Home.findById({ homeId })
+      const bringHome = await Home.findById({ _id: homeId })
       bringHome.owner = savedOwner._id
       await bringHome.save()
 
@@ -121,7 +124,7 @@ module.exports = {
     const IdOwner = req.params.IdOwner
 
     try {
-      await Owner.findByIdAndDelete({ IdOwner })
+      await Owner.findByIdAndDelete({ _id: IdOwner })
       res.status(200)
     } catch (error) {
       return next(error)

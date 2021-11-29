@@ -20,10 +20,10 @@ module.exports = {
 
   neighborhoods: async (req, res, next) => {
     try {
-      await Neighborhood.find({}, ' _id name address',(error, result) =>{
-        if(error) {
+      await Neighborhood.find({}, ' _id name address', (error, result) => {
+        if (error) {
           return next(error)
-        }else{
+        } else {
           res.status(200).json(result)
         }
       }).clone()
@@ -37,7 +37,7 @@ module.exports = {
       NeighborhoodId
     } = req.body
     try {
-      const Neighborhoods = await Neighborhood.findById({ NeighborhoodId })
+      const Neighborhoods = await Neighborhood.findById({ _id: NeighborhoodId })
       res.status(200).json(Neighborhoods)
     } catch (error) {
       return next(error)
