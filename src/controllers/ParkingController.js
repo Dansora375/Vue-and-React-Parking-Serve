@@ -48,20 +48,38 @@ module.exports = {
     const EntryResidentId = req.idResident
     const EntryResidentTime = req.entryTimeR
     const IdParking = req.idParking
-    // const {
-    //   IdParking,
-    //   entryTime,
-    //   IdHome
-    // } = req.body
-    try {
-      // const newEntryResident = new EntryResident({
-      //   home: IdHome
-      // })
-      // await newEntryResident.save()
 
+    try {
       await Parking.findByIdAndUpdate(
         { _id: IdParking },
         { lastEntryTime: EntryResidentTime, lastExitTime: null, idLastEntryResident: EntryResidentId, isTaken: true },
+        { new: true })
+
+      req.wasFilled = true
+      return next()
+      // res.status(200).json(ParkingFill)
+    } catch (error) {
+      return next(error)
+    }
+  },
+
+  fillParkingVisi: async (req, res, next) => {
+    // Antes de ejecutar el llenado en parqueadero
+    // se debe de crear un ingreso y ed ese ingreso
+    // usar su id, como se muestra abajo
+
+    // En la ruta de crear entrada de resientes se le pasara
+    // por body el IdParking y el entryTime, IdHome se le puede pasar por params,
+    // esta ruta recibira  el IdParking y el entryTime
+
+    // const EntryVisitantId = req.idVisitant
+    const EntryVisitantTime = req.entryTimeV
+    const IdParking = req.idParking
+
+    try {
+      await Parking.findByIdAndUpdate(
+        { _id: IdParking },
+        { lastEntryTime: EntryVisitantTime, lastExitTime: null, isTaken: true },
         { new: true })
 
       req.wasFilled = true

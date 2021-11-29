@@ -6,6 +6,7 @@ import entryController from '../controllers/entryController'
 import { VehicleAndParking2 } from '../controllers/HomeController'
 // 'fillParkingResi' se encarga de llenar el parqueadero dado un id
 import { fillParkingResi } from '../controllers/ParkingController'
+import { fillParkingVisi } from '../controllers/ParkingController'
 
 const router = express.Router()
 
@@ -29,10 +30,11 @@ router.post('/new-entry-resident/:IdNeighborhood/:HomeId', VehicleAndParking2, e
 /**
  *
  */
-router.post('/new-entry-visitant/:IdNeighborhood/:ParkingId', VehicleAndParking2, entryController.newEntryVisitant, (req, res) => {
+router.post('/new-entry-visitant/:IdNeighborhood/:ParkingId', entryController.newEntryVisitant, fillParkingVisi, (req, res) => {
   // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio
   // aqui solo se valida que tipo de dato llego
-  if (req.notResultMessage) {
+  const wasFilled = req.wasFilled
+  if (req.notResultMessage || !wasFilled) {
     res.status(400)
     res.send({ message: req.notResultMessage })
   } else {

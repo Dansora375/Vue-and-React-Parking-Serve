@@ -60,7 +60,8 @@ module.exports = {
       homeName,
       plate,
       vehicleType,
-      personToVisit
+      personToVisit,
+      extra
     } = req.body
 
     const neighborhood = req.params.IdNeighborhood
@@ -76,15 +77,18 @@ module.exports = {
         vehicleType,
         personToVisit,
         neighborhood,
-        parking
+        parking,
+        extra
       })
-      await entryVisitant.save((error) => {
-        if (error) { next(error) } else if (result) {
+      await entryVisitant.save((error, result) => {
+        if (error) next(error)
+        else if (result) {
           // cargando algunos resultados para posterior uso en otros middlewares
-          req.idResident = entryResident._id
-          req.entryTimeR = entryResident.entryTime
-          req.idParking = home.parking._id
+          // req.idResident = entryVisitant._id
+          req.entryTimeV = entryVisitant.entryTime
+          req.idParking = parking
           req.result = result
+          return next()
           // res.json(result)
         } else {
           req.notResultMessage = 'It couldnt be completed the task, please try again or contact to support'
@@ -95,6 +99,7 @@ module.exports = {
       next(error)
     }
   },
+
   listEntryResident: async (req, res, next) => {
     console.log(req.params)
     const neighborhood = req.params.IdNeighborhood
