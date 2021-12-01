@@ -27,6 +27,9 @@ const parkingSchema = new Schema({
   idLastEntryResident: {
     type: Schema.Types.ObjectId
   },
+  idLastEntryVisitant: {
+    tpe: Schema.Types.ObjectId
+  },
   lastEntryTime: Date,
   lastExitTime: Date,
 
@@ -38,11 +41,13 @@ const parkingSchema = new Schema({
   home: {
     type: Schema.Types.ObjectId,
     ref: 'Home'
+    // default: null
   },
   // se envia en id desde el post del vehiculo
   vehicle: {
     type: Schema.Types.ObjectId,
     ref: 'Vehicle'
+    // default: null
   },
   neighborhood: {
     type: Schema.Types.ObjectId,

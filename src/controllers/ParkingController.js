@@ -75,11 +75,12 @@ module.exports = {
     // const EntryVisitantId = req.idVisitant
     const EntryVisitantTime = req.entryTimeV
     const IdParking = req.idParking
+    const EntryVisitanId = req.idVisitant
 
     try {
       await Parking.findByIdAndUpdate(
         { _id: IdParking },
-        { lastEntryTime: EntryVisitantTime, lastExitTime: null, isTaken: true },
+        { lastEntryTime: EntryVisitantTime, idLastEntryVisitant: EntryVisitanId, lastExitTime: null, isTaken: true },
         { new: true })
 
       req.wasFilled = true
@@ -204,18 +205,17 @@ module.exports = {
     const dataResident = {
 
       path: 'home',
-      model: 'Home',
+      select: 'name owner group',
       populate: {
         path: 'owner',
-        model: 'Owner',
         select: 'name identification telephone '
-      },
-      select: 'name'
+      }
     }
 
     const dataGroup = {
 
       path: 'home',
+      select: 'name owner group',
       populate: {
         path: 'group',
         select: 'name homeType '
@@ -229,7 +229,7 @@ module.exports = {
     }
 
     try {
-      const parking = await Parking.findById({ _id: IdParking })
+      const parking = await Parking.findById({ _id: IdParking }, 'name vehicleType personType istaken assigned idLastEntryResident lastEntryTime lastExitTime home vehicle neighborhood idLastEntryVisitant')
         .populate(dataResident)
         .populate(dataGroup)
         .populate(dataVehicle)

@@ -87,7 +87,7 @@ module.exports = {
     } = req.body
     try {
       await Owner.findByIdAndUpdate(
-        {_id: OwnerId },
+        { _id: OwnerId },
         { name, identification, telephone }, { new: true }
       )
       res.status(200)
@@ -108,9 +108,12 @@ module.exports = {
       const homeWhitParking = await Home.find({ neighborhood: NeighborhoodId })
         .populate(populateParking)
 
+      // console.log(homeWhitParking)
       homeWhitParking.forEach(ele => {
-        if (ele.parking.isTaken === false && ele.group && ele.owner) {
-          data.push(ele)
+        if (ele.parking) {
+          if (ele.parking.isTaken === false && ele.group && ele.owner) {
+            data.push(ele)
+          }
         }
       })
       res.json(data)

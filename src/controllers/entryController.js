@@ -84,7 +84,7 @@ module.exports = {
         if (error) next(error)
         else if (result) {
           // cargando algunos resultados para posterior uso en otros middlewares
-          // req.idResident = entryVisitant._id
+          req.idVisitant = entryVisitant._id
           req.entryTimeV = entryVisitant.entryTime
           req.idParking = parking
           req.result = result

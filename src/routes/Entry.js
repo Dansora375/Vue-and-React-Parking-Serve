@@ -5,8 +5,7 @@ import entryController from '../controllers/entryController'
 // 'VehicleAndParking2' trae los datos del parqueadero y del vehiculo dado el id de una casa
 import { VehicleAndParking2 } from '../controllers/HomeController'
 // 'fillParkingResi' se encarga de llenar el parqueadero dado un id
-import { fillParkingResi } from '../controllers/ParkingController'
-import { fillParkingVisi } from '../controllers/ParkingController'
+import { fillParkingResi, fillParkingVisi } from '../controllers/ParkingController'
 
 const router = express.Router()
 
