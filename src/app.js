@@ -72,7 +72,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 // authentication
 
 // Puerto
-app.set('puerto', 3000)
+app.set('puerto', 2000)
 
 // para iniciar el servidor, es importante que se encuentre disponible la conección a la base de datos
 const serverConnection = async () => {

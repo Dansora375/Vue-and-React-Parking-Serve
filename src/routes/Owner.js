@@ -17,6 +17,8 @@ router.post('/:IdNeighborhood', controller.newOwner)
 // su hogar parqueadero o vehiculo
 router.put('/:IdOwner', controller.editOwner)
 
+// router.delete('/:IdOwner', controller.OwnersDelete)
+
 router.delete('/:IdOwner', controller.deleteOwner)
 
 // Se puede implementar posteriormente una ruta para asignarle a un

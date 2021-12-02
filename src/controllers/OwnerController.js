@@ -32,7 +32,27 @@ module.exports = {
       return next(error)
     }
   },
-
+  // OwnersDelete: async (req, res, next) => {
+  //   try {
+  //     const IdOwner = req.params.IdOwner
+  //     await Owner.findByIdAndDelete(IdOwner,(error, doc)=>{
+  //       if(error)
+          
+  //         next(error)
+  //       else{
+  //         console.log(doc)
+  //         res.status(200)
+          
+  //         console.log('here3')
+  //         res.send({deleted: true})
+  //         console.log('here4')
+  //       }
+  //     })
+  //   } catch (error) {
+  //     return next(error)
+  //   }
+    
+  // },
   OwnerMoreInfo: async (req, res, next) => {
     const IdOwner = req.params.IdOwner
 
@@ -126,6 +146,7 @@ module.exports = {
     try {
       await Owner.findByIdAndDelete({ _id: IdOwner })
       res.status(200)
+      res.send({deleted: true})
     } catch (error) {
       return next(error)
     }
