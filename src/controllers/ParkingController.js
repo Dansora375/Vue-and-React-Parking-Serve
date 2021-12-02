@@ -1,5 +1,6 @@
 import Home from '../models/home'
 import EntryResident from '../models/entry.resident'
+import EntryVisitant from '../models/entry.visitant'
 import Parking from '../models/parking'
 
 module.exports = {
@@ -95,14 +96,13 @@ module.exports = {
   // implemento al llenar el parqueadero
   emptyParkingResi: async (req, res, next) => {
     const IdParking = req.params.IdParking
+    const IdEntryResident = req.params.IdEntryResident
     const {
-
-      IdEntryResident,
       exitTime
     } = req.body
     try {
       // Actualizando el estado de la entrada del
-      await EntryResident.findByIdAndUpdate({ _id: IdEntryResident }, { active: false, exitTime: exitTime }, { new: true })
+      const endEntryResi = await EntryResident.findByIdAndUpdate({ _id: IdEntryResident }, { active: false, exitTime: exitTime }, { new: true })
 
       // Actualizando el estado del entradparqueadero del residente
       const parkingEmpty = await Parking.findByIdAndUpdate(
@@ -110,7 +110,35 @@ module.exports = {
         { lastExitTime: exitTime, isTaken: false },
         { new: true })
 
-      res.status(200).json(parkingEmpty)
+      req.updatedEntryResi = endEntryResi
+      req.parkingEmpty = parkingEmpty
+      return next()
+    } catch (error) {
+      req.error = `${error} no se pudo completar el vaciado`
+      return next(error)
+    }
+  },
+
+  emptyParkingVisi: async (req, res, next) => {
+    const IdParking = req.params.IdParking
+    const IdEntryVisitant = req.params.IdEntryVisitant
+    const {
+
+      exitTime
+    } = req.body
+    try {
+      // Actualizando el estado de la entrada del
+      const endEntryVisi = await EntryVisitant.findByIdAndUpdate({ _id: IdEntryVisitant }, { active: false, exitTime: exitTime }, { new: true })
+
+      // Actualizando el estado del entradparqueadero del residente
+      const parkingEmpty = await Parking.findByIdAndUpdate(
+        { _id: IdParking },
+        { lastExitTime: exitTime, isTaken: false },
+        { new: true })
+
+      req.updatedEntryVisi = endEntryVisi
+      req.parkingEmpty = parkingEmpty
+      return next()
     } catch (error) {
       return next(error)
     }

@@ -5,7 +5,7 @@ import entryController from '../controllers/entryController'
 // 'VehicleAndParking2' trae los datos del parqueadero y del vehiculo dado el id de una casa
 import { VehicleAndParking2 } from '../controllers/HomeController'
 // 'fillParkingResi' se encarga de llenar el parqueadero dado un id
-import { fillParkingResi, fillParkingVisi } from '../controllers/ParkingController'
+import { fillParkingResi, fillParkingVisi, emptyParkingResi, emptyParkingVisi } from '../controllers/ParkingController'
 
 const router = express.Router()
 
@@ -40,6 +40,39 @@ router.post('/new-entry-visitant/:IdNeighborhood/:ParkingId', entryController.ne
   } else {
     res.status(200)
     res.send({ data: req.result, message: 'The task was completed succesfully' })
+  }
+})
+
+router.put('/end-entry-resident/:IdParking/:HomeId', emptyParkingResi, (req, res) => {
+  // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio
+  // aqui solo se valida que tipo de dato llego
+  const updatedEntryResi = req.updatedEntryResi
+  const parkingResult = req.parkingEmpty
+
+  if (req.error) {
+    res.status(400)
+    res.send({ message: req.error })
+  } else {
+    res.status(200)
+    res.send({ entryUpdated: updatedEntryResi, message: 'The task was completed succesfully', resultParking: parkingResult })
+  }
+})
+
+/**
+ *
+ */
+router.put('/end-entry-visitant/:IdNeighborhood/:ParkingId', emptyParkingVisi, (req, res) => {
+  // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio
+  // aqui solo se valida que tipo de dato llego
+  const updatedEntryVisi = req.updatedEntryVisi
+  const parkingResult = req.parkingEmpty
+
+  if (req.error) {
+    res.status(400)
+    res.send({ message: req.error })
+  } else {
+    res.status(200)
+    res.send({ entryUpdated: updatedEntryVisi, resultParking: parkingResult, message: 'The task was completed succesfully' })
   }
 })
 
