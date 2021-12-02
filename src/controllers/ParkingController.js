@@ -50,11 +50,11 @@ module.exports = {
     const IdParking = req.idParking
 
     try {
-      await Parking.findByIdAndUpdate(
+      const updatedParking = await Parking.findByIdAndUpdate(
         { _id: IdParking },
         { lastEntryTime: EntryResidentTime, lastExitTime: null, idLastEntryResident: EntryResidentId, isTaken: true },
         { new: true })
-
+      req.resultParkingUpdate = updatedParking
       req.wasFilled = true
       return next()
       // res.status(200).json(ParkingFill)
@@ -227,9 +227,13 @@ module.exports = {
       model: 'Vehicle',
       select: 'plate carBrand color type extra'
     }
-
+    const dataEntryVisitant = {
+      path: 'idLastEntryVisitant',
+      select: 'name identification group homeName plate extra entryTime'
+    }
     try {
       const parking = await Parking.findById({ _id: IdParking }, 'name vehicleType personType istaken assigned idLastEntryResident lastEntryTime lastExitTime home vehicle neighborhood idLastEntryVisitant')
+        .populate(dataEntryVisitant)
         .populate(dataResident)
         .populate(dataGroup)
         .populate(dataVehicle)

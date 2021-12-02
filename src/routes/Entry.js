@@ -17,12 +17,13 @@ router.post('/new-entry-resident/:IdNeighborhood/:HomeId', VehicleAndParking2, e
   // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio
   // aqui solo se valida que tipo de dato llego
   const wasFilled = req.wasFilled
+  const parkingResult = req.resultParkingUpdate
   if (req.notResultMessage || !wasFilled) {
     res.status(400)
     res.send({ message: req.notResultMessage })
   } else {
     res.status(200)
-    res.send({ data: req.result, message: 'The task was completed succesfully' })
+    res.send({ data: req.result, message: 'The task was completed succesfully', resultParking: parkingResult })
   }
 })
 
