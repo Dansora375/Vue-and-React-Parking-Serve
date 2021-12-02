@@ -44,7 +44,7 @@ const userSchema = new Schema({
 { timestamps: true }
 // TsT
 )
-
+  
 userSchema.method('isCorrectPassword', function (password, callback) {
   bcrypt.compare(password, this.password, function (err, same) {
     if (err) {

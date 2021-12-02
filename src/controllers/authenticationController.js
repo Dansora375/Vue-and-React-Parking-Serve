@@ -69,7 +69,7 @@ module.exports = {
       })
     } catch (error) {
       res.status(400)
-      res.send({ error: `Error creando el usuario ${error}` })
+      res.send({ message: `Error creando el usuario ${error}` })
     }
   },
   login: async (req, res) => {
