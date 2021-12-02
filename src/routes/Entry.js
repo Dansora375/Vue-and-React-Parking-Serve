@@ -42,6 +42,7 @@ router.post('/new-entry-visitant/:IdNeighborhood/:ParkingId', entryController.ne
     res.send({ data: req.result, message: 'The task was completed succesfully' })
   }
 })
+
 // PARA VACIAR SE DEBE DE PASAR POR EL BODY LA HORA DE SALIDA
 // Y POR PARAM EL IDPARKING Y EL ID DE LA ENTRADA SEA RESIDENTE OFVISTANTE SEGUNCORRESPONDA
 router.put('/end-entry-resident/:IdParking/:IdEntryResident', emptyParkingResi, (req, res) => {
@@ -60,7 +61,8 @@ router.put('/end-entry-resident/:IdParking/:IdEntryResident', emptyParkingResi, 
 })
 
 /**
- *
+ * PARA VACIAR SE DEBE DE PASAR POR EL BODY LA HORA DE SALIDA
+ Y POR PARAM EL IDPARKING Y EL ID DE LA ENTRADA SEA RESIDENTE OFVISTANTE SEGUNCORRESPONDA
  */
 router.put('/end-entry-visitant/:IdParking/:IdEntryVisitant', emptyParkingVisi, (req, res) => {
   // los middleware anteriores se encargan de consultar y hacer toda la logica de negocio

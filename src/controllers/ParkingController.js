@@ -133,7 +133,7 @@ module.exports = {
       // Actualizando el estado del entradparqueadero del residente
       const parkingEmpty = await Parking.findByIdAndUpdate(
         { _id: IdParking },
-        { lastExitTime: exitTime, isTaken: false },
+        { lastEntryTime: null, lastExitTime: null, idLastEntryVisitant: null, isTaken: false },
         { new: true })
 
       req.updatedEntryVisi = endEntryVisi
